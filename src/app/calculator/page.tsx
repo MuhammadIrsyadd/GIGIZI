@@ -122,7 +122,7 @@ function CalculatorContent() {
   const updateWeight = (id: string, weight: number) => {
     setSelectedIngredients(
       selectedIngredients.map((item) =>
-        item.id === id ? { ...item, weight: Math.max(0, weight) } : item
+        item.id === id ? { ...item, weight: isNaN(weight) ? 0 : Math.max(0, weight) } : item
       )
     );
   };
@@ -151,7 +151,6 @@ function CalculatorContent() {
     ].filter((item) => item.value > 0);
   }, [totals]);
 
-  // Status helper logic for UI labels
   const getStatus = (val: number, type: 'protein' | 'fat' | 'carbs' | 'fiber' | 'calories') => {
     if (val === 0) return null;
     const thresholds = {
@@ -358,22 +357,26 @@ function CalculatorContent() {
                       </div>
 
                       <div className="flex items-center gap-6">
-                        <div className="flex flex-col gap-2 min-w-[150px]">
-                          <div className="flex justify-between text-xs font-space-mono font-bold">
-                            <span className="text-text-dark/40 uppercase">Berat</span>
-                            <span className="text-primary">{item.weight}g</span>
+                        <div className="flex flex-col gap-1 min-w-[100px]">
+                          <label className="text-[10px] uppercase font-space-mono font-bold text-text-dark/40 tracking-wider">
+                            Berat (gram)
+                          </label>
+                          <div className="relative group">
+                            <input
+                              type="number"
+                              min="0"
+                              max="5000"
+                              value={item.weight === 0 ? "" : item.weight}
+                              placeholder="0"
+                              onChange={(e) =>
+                                updateWeight(item.id, parseInt(e.target.value))
+                              }
+                              className="w-full bg-background-warm border-2 border-text-dark/5 rounded-xl px-3 py-2 text-text-dark font-bold focus:outline-none focus:border-primary transition-all text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            />
+                            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[10px] font-bold text-text-dark/20 group-focus-within:text-primary transition-colors">
+                              gr
+                            </div>
                           </div>
-                          <input
-                            type="range"
-                            min="0"
-                            max="1000"
-                            step="5"
-                            value={item.weight}
-                            onChange={(e) =>
-                              updateWeight(item.id, parseInt(e.target.value))
-                            }
-                            className="w-full accent-primary h-2 bg-text-dark/10 rounded-lg appearance-none cursor-pointer"
-                          />
                         </div>
                         <div className="flex flex-col items-end min-w-[80px]">
                           <div className="text-xl font-bold text-text-dark">
