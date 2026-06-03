@@ -142,14 +142,14 @@ export const RecommendationEngine = ({
             {item.type === "success" && <Sparkles className="w-5 h-5 text-primary" />}
             {item.type === "warning" && <AlertTriangle className="w-5 h-5 text-accent" />}
             {item.type === "info" && <Lightbulb className="w-5 h-5 text-secondary" />}
-            {item.type === "neutral" && <Utensils className="w-5 h-5 text-text-dark/40" />}
+            {item.type === "neutral" && <Utensils className="w-5 h-5 text-foreground/40" />}
             
             <h4 className={cn(
               "font-bold text-sm uppercase tracking-widest",
               item.type === "success" && "text-primary",
               item.type === "warning" && "text-accent",
               item.type === "info" && "text-secondary",
-              item.type === "neutral" && "text-text-dark/40"
+              item.type === "neutral" && "text-foreground/40"
             )}>
               {item.type === "success" ? "Pencapaian" : item.type === "neutral" ? "Saran Tambahan" : "Panduan GIZI"}
             </h4>
@@ -157,8 +157,8 @@ export const RecommendationEngine = ({
 
           <div className="flex gap-4 items-start">
             <div className="flex-grow">
-              <div className="font-bold text-text-dark text-lg mb-1">{item.title}</div>
-              <p className="text-sm text-text-dark/70 leading-relaxed italic">
+              <div className="font-bold text-foreground text-lg mb-1">{item.title}</div>
+              <p className="text-sm text-foreground/70 leading-relaxed italic">
                 {item.desc}
               </p>
             </div>

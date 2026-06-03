@@ -35,10 +35,10 @@ export default function DatabasePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-playfair font-bold text-text-dark mb-4">
+        <h1 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
           Database <span className="text-primary italic">Bahan</span>
         </h1>
-        <p className="text-text-dark/70 max-w-xl mx-auto italic">
+        <p className="text-foreground/70 max-w-xl mx-auto italic">
           Jelajahi informasi gizi lengkap dari ratusan bahan makanan lokal
           Indonesia. Data dihitung per 100 gram.
         </p>
@@ -47,7 +47,7 @@ export default function DatabasePage() {
       {/* Search and Filter */}
       <div className="flex flex-col md:flex-row gap-6 mb-12">
         <div className="relative flex-grow">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-dark/40" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" />
           <input
             type="text"
             placeholder="Cari dalam database..."
@@ -57,7 +57,7 @@ export default function DatabasePage() {
           />
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <Filter className="w-5 h-5 text-text-dark/40 mr-2" />
+          <Filter className="w-5 h-5 text-foreground/40 mr-2" />
           {categories.map((cat) => (
             <button
               key={cat}
@@ -65,7 +65,7 @@ export default function DatabasePage() {
               className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
                 activeCategory === cat
                   ? "bg-primary text-background-warm shadow-md"
-                  : "bg-white text-text-dark/60 hover:bg-text-dark/5"
+                  : "bg-white text-foreground/60 hover:bg-text-dark/5"
               }`}
             >
               {cat}
@@ -89,8 +89,8 @@ export default function DatabasePage() {
                 {item.icon}
               </span>
               <div>
-                <h3 className="font-bold text-lg text-text-dark">{item.name}</h3>
-                <span className="text-[10px] uppercase font-space-mono text-text-dark/40 tracking-widest">
+                <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
+                <span className="text-[10px] uppercase font-space-mono text-foreground/40 tracking-widest">
                   {item.category}
                 </span>
               </div>
@@ -98,10 +98,10 @@ export default function DatabasePage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-background-warm/50 p-3 rounded-xl border border-text-dark/5 text-center">
-                <div className="text-[10px] uppercase font-space-mono text-text-dark/40 mb-1">
+                <div className="text-[10px] uppercase font-space-mono text-foreground/40 mb-1">
                   Kalori
                 </div>
-                <div className="font-bold text-text-dark">
+                <div className="font-bold text-foreground">
                   {item.calories} <span className="text-[10px] font-normal opacity-50">kkal</span>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function DatabasePage() {
                 <div className="text-[10px] uppercase font-space-mono text-primary mb-1">
                   Protein
                 </div>
-                <div className="font-bold text-text-dark">
+                <div className="font-bold text-foreground">
                   {item.protein} <span className="text-[10px] font-normal opacity-50">g</span>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function DatabasePage() {
                 <div className="text-[10px] uppercase font-space-mono text-secondary mb-1">
                   Lemak
                 </div>
-                <div className="font-bold text-text-dark">
+                <div className="font-bold text-foreground">
                   {item.fat} <span className="text-[10px] font-normal opacity-50">g</span>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function DatabasePage() {
                 <div className="text-[10px] uppercase font-space-mono text-accent mb-1">
                   Karbo
                 </div>
-                <div className="font-bold text-text-dark">
+                <div className="font-bold text-foreground">
                   {item.carbs} <span className="text-[10px] font-normal opacity-50">g</span>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function DatabasePage() {
 
       {filteredIngredients.length === 0 && (
         <div className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-text-dark/10">
-          <p className="text-text-dark/40 italic">
+          <p className="text-foreground/40 italic">
             Bahan tidak ditemukan. Coba gunakan kata kunci lain.
           </p>
         </div>

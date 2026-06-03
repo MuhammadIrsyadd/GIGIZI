@@ -26,10 +26,10 @@ export default function KomunitasPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header className="mb-16 text-center">
-        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-text-dark mb-6">
+        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-foreground mb-6">
           Pilihan <span className="text-primary italic">Komunitas</span>
         </h1>
-        <p className="text-xl text-text-dark/70 max-w-2xl mx-auto italic leading-relaxed">
+        <p className="text-xl text-foreground/70 max-w-2xl mx-auto italic leading-relaxed">
           Temukan inspirasi menu sehat dari pengguna GIGIZI lainnya. 
           Satu klik untuk mulai menghitung nutrisinya.
         </p>
@@ -51,8 +51,8 @@ export default function KomunitasPage() {
                     <User className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
-                    <div className="font-bold text-text-dark">{menu.author}</div>
-                    <div className="text-[10px] uppercase font-space-mono text-text-dark/40">Kontributor</div>
+                    <div className="font-bold text-foreground">{menu.author}</div>
+                    <div className="text-[10px] uppercase font-space-mono text-foreground/40">Kontributor</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-accent bg-accent/5 px-3 py-1 rounded-full">
@@ -61,16 +61,16 @@ export default function KomunitasPage() {
                 </div>
               </div>
 
-              <h3 className="text-2xl font-playfair font-bold text-text-dark mb-3 group-hover:text-primary transition-colors">
+              <h3 className="text-2xl font-playfair font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                 {menu.title}
               </h3>
-              <p className="text-text-dark/60 text-sm mb-6 leading-relaxed italic">
+              <p className="text-foreground/60 text-sm mb-6 leading-relaxed italic">
                 "{menu.description}"
               </p>
 
               <div className="flex flex-wrap gap-2 mb-8">
                 {menu.tags.map((tag) => (
-                  <span key={tag} className="text-[10px] font-space-mono font-bold uppercase bg-text-dark/5 text-text-dark/50 px-3 py-1 rounded-lg">
+                  <span key={tag} className="text-[10px] font-space-mono font-bold uppercase bg-text-dark/5 text-foreground/50 px-3 py-1 rounded-lg">
                     #{tag}
                   </span>
                 ))}
@@ -83,14 +83,14 @@ export default function KomunitasPage() {
                     <div key={item.ingredientId} className="flex justify-between items-center text-sm">
                       <div className="flex items-center gap-2">
                         <span>{ing?.icon}</span>
-                        <span className="text-text-dark/80">{ing?.name}</span>
+                        <span className="text-foreground/80">{ing?.name}</span>
                       </div>
-                      <span className="font-space-mono text-text-dark/40">{item.weight}g</span>
+                      <span className="font-space-mono text-foreground/40">{item.weight}g</span>
                     </div>
                   );
                 })}
                 {menu.items.length > 3 && (
-                  <div className="text-xs text-text-dark/30 font-space-mono">
+                  <div className="text-xs text-foreground/30 font-space-mono">
                     + {menu.items.length - 3} bahan lainnya
                   </div>
                 )}
@@ -110,10 +110,10 @@ export default function KomunitasPage() {
       </div>
 
       <section className="mt-24 py-20 bg-secondary/5 rounded-[4rem] text-center border border-secondary/10">
-        <h2 className="text-3xl font-playfair font-bold text-text-dark mb-4">
+        <h2 className="text-3xl font-playfair font-bold text-foreground mb-4">
           Ingin Berbagi Menu Anda?
         </h2>
-        <p className="text-text-dark/60 max-w-xl mx-auto mb-8 italic">
+        <p className="text-foreground/60 max-w-xl mx-auto mb-8 italic">
           Simpan menu Anda di Kalkulator dan bagikan kepada komunitas untuk menginspirasi orang lain hidup lebih sehat.
         </p>
         <div className="flex justify-center gap-4">

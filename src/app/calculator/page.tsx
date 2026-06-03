@@ -238,10 +238,10 @@ function CalculatorContent() {
       </AnimatePresence>
 
       <header className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-playfair font-bold text-text-dark mb-4">
+        <h1 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
           Kalkulator <span className="text-primary italic">Nutrisi</span>
         </h1>
-        <p className="text-text-dark/70 max-w-xl mx-auto italic">
+        <p className="text-foreground/70 max-w-xl mx-auto italic">
           Tambahkan bahan makanan Anda untuk melihat total kalori dan
           makronutrien secara real-time.
         </p>
@@ -251,7 +251,7 @@ function CalculatorContent() {
         <div className="lg:col-span-7 space-y-8">
           <div className="relative">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-dark/40 group-focus-within:text-primary transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40 group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Cari bahan (cth: Nasi Goreng, Tempe, Rendang...)"
@@ -282,10 +282,10 @@ function CalculatorContent() {
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{ingredient.icon}</span>
                         <div>
-                          <div className="font-bold text-text-dark">
+                          <div className="font-bold text-foreground">
                             {ingredient.name}
                           </div>
-                          <div className="text-xs text-text-dark/50 uppercase tracking-wider font-space-mono">
+                          <div className="text-xs text-foreground/50 uppercase tracking-wider font-space-mono">
                             {ingredient.category}
                           </div>
                         </div>
@@ -300,7 +300,7 @@ function CalculatorContent() {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h3 className="text-xl font-playfair font-bold text-text-dark flex items-center gap-2">
+              <h3 className="text-xl font-playfair font-bold text-foreground flex items-center gap-2">
                 <CalcIcon className="w-5 h-5 text-primary" />
                 Piring Anda
               </h3>
@@ -326,7 +326,7 @@ function CalculatorContent() {
 
             {selectedIngredients.length === 0 ? (
               <div className="p-12 text-center bg-text-dark/5 rounded-[2.5rem] border-2 border-dashed border-text-dark/10">
-                <p className="text-text-dark/50">
+                <p className="text-foreground/50">
                   Belum ada bahan. Cari dan tambahkan untuk mulai menghitung.
                 </p>
               </div>
@@ -347,10 +347,10 @@ function CalculatorContent() {
                           {item.icon}
                         </span>
                         <div>
-                          <div className="font-bold text-lg text-text-dark">
+                          <div className="font-bold text-lg text-foreground">
                             {item.name}
                           </div>
-                          <div className="text-xs text-text-dark/50 font-space-mono uppercase tracking-widest">
+                          <div className="text-xs text-foreground/50 font-space-mono uppercase tracking-widest">
                             {item.calories} kkal / 100g
                           </div>
                         </div>
@@ -358,7 +358,7 @@ function CalculatorContent() {
 
                       <div className="flex items-center gap-6">
                         <div className="flex flex-col gap-1 min-w-[100px]">
-                          <label className="text-[10px] uppercase font-space-mono font-bold text-text-dark/40 tracking-wider">
+                          <label className="text-[10px] uppercase font-space-mono font-bold text-foreground/40 tracking-wider">
                             Berat (gram)
                           </label>
                           <div className="relative group">
@@ -371,24 +371,24 @@ function CalculatorContent() {
                               onChange={(e) =>
                                 updateWeight(item.id, parseInt(e.target.value))
                               }
-                              className="w-full bg-background-warm border-2 border-text-dark/5 rounded-xl px-3 py-2 text-text-dark font-bold focus:outline-none focus:border-primary transition-all text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              className="w-full bg-background-warm border-2 border-text-dark/5 rounded-xl px-3 py-2 text-foreground font-bold focus:outline-none focus:border-primary transition-all text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
-                            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[10px] font-bold text-text-dark/20 group-focus-within:text-primary transition-colors">
+                            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[10px] font-bold text-foreground/20 group-focus-within:text-primary transition-colors">
                               gr
                             </div>
                           </div>
                         </div>
                         <div className="flex flex-col items-end min-w-[80px]">
-                          <div className="text-xl font-bold text-text-dark">
+                          <div className="text-xl font-bold text-foreground">
                             {Math.round((item.calories * item.weight) / 100)}
                           </div>
-                          <div className="text-[10px] uppercase font-space-mono text-text-dark/40 tracking-tighter">
+                          <div className="text-[10px] uppercase font-space-mono text-foreground/40 tracking-tighter">
                             Total kkal
                           </div>
                         </div>
                         <button
                           onClick={() => removeIngredient(item.id)}
-                          className="p-2 text-text-dark/20 hover:text-accent transition-colors"
+                          className="p-2 text-foreground/20 hover:text-accent transition-colors"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -408,7 +408,7 @@ function CalculatorContent() {
 
           {savedMenus.length > 0 && (
             <div className="pt-8 border-t border-text-dark/10">
-              <h3 className="text-xl font-playfair font-bold text-text-dark mb-4">
+              <h3 className="text-xl font-playfair font-bold text-foreground mb-4">
                 Menu Tersimpan
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -419,16 +419,16 @@ function CalculatorContent() {
                     className="flex items-center justify-between p-4 bg-white/50 border border-text-dark/5 rounded-2xl hover:bg-white transition-all text-left group shadow-sm"
                   >
                     <div>
-                      <div className="font-bold text-text-dark group-hover:text-primary transition-colors">
+                      <div className="font-bold text-foreground group-hover:text-primary transition-colors">
                         {menu.name}
                       </div>
-                      <div className="text-xs text-text-dark/40 font-space-mono">
+                      <div className="text-xs text-foreground/40 font-space-mono">
                         {menu.date} • {menu.totalCalories} kkal
                       </div>
                     </div>
                     <div
                       onClick={(e) => deleteSavedMenu(menu.id, e)}
-                      className="p-2 opacity-0 group-hover:opacity-100 text-text-dark/20 hover:text-accent transition-all"
+                      className="p-2 opacity-0 group-hover:opacity-100 text-foreground/20 hover:text-accent transition-all"
                     >
                       <Trash2 className="w-4 h-4" />
                     </div>
@@ -474,7 +474,7 @@ function CalculatorContent() {
             </div>
 
             <div className="bg-white p-8 rounded-[3rem] border border-text-dark/5 shadow-sm space-y-8">
-              <h3 className="text-xl font-playfair font-bold text-text-dark text-center">
+              <h3 className="text-xl font-playfair font-bold text-foreground text-center">
                 Rincian Nutrisi
               </h3>
 
@@ -508,7 +508,7 @@ function CalculatorContent() {
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex flex-col items-center justify-center text-text-dark/20 italic text-sm">
+                  <div className="flex flex-col items-center justify-center text-foreground/20 italic text-sm">
                     <Info className="w-10 h-10 mb-2 opacity-10" />
                     Belum ada data visual
                   </div>
@@ -527,7 +527,7 @@ function CalculatorContent() {
                         </div>
                     )}
                   </div>
-                  <div className="text-2xl font-bold text-text-dark">
+                  <div className="text-2xl font-bold text-foreground">
                     {totals.protein.toFixed(1)}g
                   </div>
                   <div className="absolute -bottom-2 -right-2 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -546,7 +546,7 @@ function CalculatorContent() {
                         </div>
                     )}
                   </div>
-                  <div className="text-2xl font-bold text-text-dark">
+                  <div className="text-2xl font-bold text-foreground">
                     {totals.fat.toFixed(1)}g
                   </div>
                 </div>
@@ -562,7 +562,7 @@ function CalculatorContent() {
                         </div>
                     )}
                   </div>
-                  <div className="text-2xl font-bold text-text-dark">
+                  <div className="text-2xl font-bold text-foreground">
                     {totals.carbs.toFixed(1)}g
                   </div>
                 </div>
@@ -570,7 +570,7 @@ function CalculatorContent() {
                 {/* Serat Card */}
                 <div className="bg-text-dark/5 p-4 rounded-2xl border border-text-dark/10 transition-all hover:shadow-md group">
                   <div className="flex justify-between items-start mb-1">
-                    <div className="text-[10px] uppercase font-space-mono text-text-dark/40 font-bold tracking-widest">Serat</div>
+                    <div className="text-[10px] uppercase font-space-mono text-foreground/40 font-bold tracking-widest">Serat</div>
                     {getStatus(totals.fiber, 'fiber') && (
                         <div className={cn("flex items-center gap-0.5 text-[8px] font-bold uppercase", getStatus(totals.fiber, 'fiber')?.color)}>
                             {getStatus(totals.fiber, 'fiber')?.icon}
@@ -578,7 +578,7 @@ function CalculatorContent() {
                         </div>
                     )}
                   </div>
-                  <div className="text-2xl font-bold text-text-dark">
+                  <div className="text-2xl font-bold text-foreground">
                     {totals.fiber.toFixed(1)}g
                   </div>
                 </div>
@@ -606,14 +606,14 @@ function CalculatorContent() {
             >
               <button
                 onClick={() => setIsSaving(false)}
-                className="absolute top-6 right-6 text-text-dark/40 hover:text-text-dark transition-colors"
+                className="absolute top-6 right-6 text-foreground/40 hover:text-foreground transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
-              <h3 className="text-2xl font-playfair font-bold text-text-dark mb-2">
+              <h3 className="text-2xl font-playfair font-bold text-foreground mb-2">
                 Simpan Menu Ini
               </h3>
-              <p className="text-text-dark/60 mb-6 italic text-sm">
+              <p className="text-foreground/60 mb-6 italic text-sm">
                 Beri nama untuk menu Anda agar mudah dicari kembali di tab "Menu Tersimpan".
               </p>
               <input
@@ -648,15 +648,15 @@ function CalculatorContent() {
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
                 <CalcIcon className="w-6 h-6 text-background-warm" />
               </div>
-              <span className="text-2xl font-playfair font-bold text-text-dark">GIGIZI</span>
+              <span className="text-2xl font-playfair font-bold text-foreground">GIGIZI</span>
             </div>
-            <div className="text-[10px] font-space-mono text-text-dark/40 uppercase tracking-[0.3em]">
+            <div className="text-[10px] font-space-mono text-foreground/40 uppercase tracking-[0.3em]">
               {new Date().toLocaleDateString("id-ID")}
             </div>
           </div>
 
           <div className="text-center py-6">
-            <h2 className="text-3xl font-playfair font-bold text-text-dark mb-1">
+            <h2 className="text-3xl font-playfair font-bold text-foreground mb-1">
               {menuName || "Ringkasan Nutrisi"}
             </h2>
             <div className="text-primary font-space-mono text-[10px] uppercase tracking-[0.4em] font-bold">
@@ -678,24 +678,24 @@ function CalculatorContent() {
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
               <div className="text-[10px] uppercase font-space-mono text-primary font-bold mb-1 tracking-widest">Protein</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.protein.toFixed(1)}g</div>
+              <div className="text-3xl font-bold text-foreground">{totals.protein.toFixed(1)}g</div>
             </div>
             <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
               <div className="text-[10px] uppercase font-space-mono text-secondary font-bold mb-1 tracking-widest">Lemak</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.fat.toFixed(1)}g</div>
+              <div className="text-3xl font-bold text-foreground">{totals.fat.toFixed(1)}g</div>
             </div>
             <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
               <div className="text-[10px] uppercase font-space-mono text-accent font-bold mb-1 tracking-widest">Karbo</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.carbs.toFixed(1)}g</div>
+              <div className="text-3xl font-bold text-foreground">{totals.carbs.toFixed(1)}g</div>
             </div>
             <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
-              <div className="text-[10px] uppercase font-space-mono text-text-dark/30 font-bold mb-1 tracking-widest">Serat</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.fiber.toFixed(1)}g</div>
+              <div className="text-[10px] uppercase font-space-mono text-foreground/30 font-bold mb-1 tracking-widest">Serat</div>
+              <div className="text-3xl font-bold text-foreground">{totals.fiber.toFixed(1)}g</div>
             </div>
           </div>
 
           <div className="mt-4 pt-8 border-t border-text-dark/10 text-center">
-            <div className="text-[10px] text-text-dark/30 font-space-mono uppercase italic tracking-widest">
+            <div className="text-[10px] text-foreground/30 font-space-mono uppercase italic tracking-widest">
               Dihitung dengan GIGIZI — Gizi di Ujung Jari
             </div>
           </div>

@@ -109,14 +109,14 @@ export default function TanyaGiziPage() {
             <Salad className="w-6 h-6 text-background-warm" />
           </div>
           <div>
-            <h1 className="text-2xl font-playfair font-bold text-text-dark">Tanya GIZI</h1>
+            <h1 className="text-2xl font-playfair font-bold text-foreground">Tanya GIZI</h1>
             <div className="text-xs text-primary font-bold flex items-center gap-1">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               Online
             </div>
           </div>
         </div>
-        <Link href="/calculator" className="text-text-dark/40 hover:text-primary transition-colors flex items-center gap-2 text-sm font-bold">
+        <Link href="/calculator" className="text-foreground/40 hover:text-primary transition-colors flex items-center gap-2 text-sm font-bold">
           <ArrowLeft className="w-4 h-4" />
           Kembali ke Kalkulator
         </Link>
@@ -141,7 +141,7 @@ export default function TanyaGiziPage() {
                 <div className={`p-4 rounded-3xl text-sm leading-relaxed shadow-sm ${
                   msg.sender === "user" 
                   ? "bg-secondary text-white rounded-tr-none" 
-                  : "bg-white text-text-dark rounded-tl-none border border-text-dark/5"
+                  : "bg-white text-foreground rounded-tl-none border border-text-dark/5"
                 }`}>
                   {msg.text}
                 </div>
@@ -159,7 +159,7 @@ export default function TanyaGiziPage() {
             <button
               key={s}
               onClick={() => handleSend(s)}
-              className="text-xs bg-white border border-text-dark/10 px-4 py-2 rounded-full hover:border-primary hover:text-primary transition-all text-text-dark/60 italic"
+              className="text-xs bg-white border border-text-dark/10 px-4 py-2 rounded-full hover:border-primary hover:text-primary transition-all text-foreground/60 italic"
             >
               {s}
             </button>
@@ -172,7 +172,7 @@ export default function TanyaGiziPage() {
         <input
           type="text"
           placeholder="Tanyakan sesuatu..."
-          className="w-full pl-6 pr-16 py-5 bg-white border-2 border-text-dark/5 rounded-[2rem] focus:outline-none focus:border-primary transition-all shadow-xl text-text-dark"
+          className="w-full pl-6 pr-16 py-5 bg-white border-2 border-text-dark/5 rounded-[2rem] focus:outline-none focus:border-primary transition-all shadow-xl text-foreground"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
@@ -184,7 +184,7 @@ export default function TanyaGiziPage() {
           <Send className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
       </div>
-      <p className="text-[10px] text-center mt-4 text-text-dark/30 font-space-mono uppercase">
+      <p className="text-[10px] text-center mt-4 text-foreground/30 font-space-mono uppercase">
         GIGIZI Assistant — Bukan saran medis profesional.
       </p>
     </div>
