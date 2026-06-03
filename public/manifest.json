@@ -1,0 +1,16 @@
+{
+  "name": "GIGIZI — Gizi di Ujung Jari",
+  "short_name": "GIGIZI",
+  "description": "Kalkulator nutrisi bahan makanan lokal Indonesia yang ramah dan jujur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF6EF",
+  "theme_color": "#3D6B4F",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
