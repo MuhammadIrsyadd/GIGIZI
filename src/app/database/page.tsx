@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { ingredients } from "@/data/ingredients";
-import { Search, ChevronRight, Filter } from "lucide-react";
+import { Search, ChevronRight, Filter, Info } from "lucide-react";
 import { motion } from "framer-motion";
 
 const categories = [
