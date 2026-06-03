@@ -43,10 +43,10 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-text-dark/5">
+      <section className="py-24 bg-zinc-200/50 dark:bg-zinc-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center text-center p-8 bg-background-warm rounded-[3rem] shadow-sm border border-text-dark/5 hover:shadow-xl transition-all hover:-translate-y-2 group">
+            <div className="flex flex-col items-center text-center p-8 bg-background-warm dark:bg-zinc-800 rounded-[3rem] shadow-sm border border-zinc-300 dark:border-zinc-700 hover:shadow-xl transition-all hover:-translate-y-2 group">
               <div className="w-20 h-20 bg-primary/10 rounded-[2rem] flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-background-warm transition-colors">
                 <Leaf className="w-10 h-10 text-primary group-hover:text-background-warm" />
               </div>
@@ -59,7 +59,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="flex flex-col items-center text-center p-8 bg-background-warm rounded-[3rem] shadow-sm border border-text-dark/5 hover:shadow-xl transition-all hover:-translate-y-2 group">
+            <div className="flex flex-col items-center text-center p-8 bg-background-warm dark:bg-zinc-800 rounded-[3rem] shadow-sm border border-zinc-300 dark:border-zinc-700 hover:shadow-xl transition-all hover:-translate-y-2 group">
               <div className="w-20 h-20 bg-secondary/10 rounded-[2rem] flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:text-foreground transition-colors">
                 <Zap className="w-10 h-10 text-secondary group-hover:text-foreground" />
               </div>
@@ -72,7 +72,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-8 bg-background-warm rounded-[3rem] shadow-sm border border-text-dark/5 hover:shadow-xl transition-all hover:-translate-y-2 group">
+            <div className="flex flex-col items-center text-center p-8 bg-background-warm dark:bg-zinc-800 rounded-[3rem] shadow-sm border border-zinc-300 dark:border-zinc-700 hover:shadow-xl transition-all hover:-translate-y-2 group">
               <div className="w-20 h-20 bg-accent/10 rounded-[2rem] flex items-center justify-center mb-8 group-hover:bg-accent group-hover:text-background-warm transition-colors">
                 <Heart className="w-10 h-10 text-accent group-hover:text-background-warm" />
               </div>

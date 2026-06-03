@@ -5,6 +5,7 @@
   --color-secondary: #F5A623;
   --color-accent: #E8503A;
   --color-background-warm: #FAF6EF;
+  --color-background-warm-dark: #27272a; /* zinc-800 */
   --color-text-dark: #2C1810;
   
   --font-playfair: "Playfair Display", serif;
