@@ -126,7 +126,7 @@ function CalculatorContent() {
       )
     );
   };
-
+// Calculations
   const totals = useMemo(() => {
     return selectedIngredients.reduce(
       (acc, item) => {
@@ -137,9 +137,10 @@ function CalculatorContent() {
           fat: acc.fat + item.fat * factor,
           carbs: acc.carbs + item.carbs * factor,
           fiber: acc.fiber + item.fiber * factor,
+          price: acc.price + (item.price || 0) * factor,
         };
       },
-      { calories: 0, protein: 0, fat: 0, carbs: 0, fiber: 0 }
+      { calories: 0, protein: 0, fat: 0, carbs: 0, fiber: 0, price: 0 }
     );
   }, [selectedIngredients]);
 
