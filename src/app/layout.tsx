@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -42,10 +43,12 @@ export default function RootLayout({
       className={`${playfair.variable} ${dmSans.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-dm-sans selection:bg-primary/20 selection:text-primary">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <Analytics />
+        <ThemeProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+            <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
