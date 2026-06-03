@@ -11,8 +11,8 @@ export const Footer = () => {
               <span className="text-xl font-playfair font-bold">GIGIZI</span>
             </div>
             <p className="text-sm opacity-80 leading-relaxed italic">
-              "Gizi di Ujung Jari" — Dibuat oleh <strong>Irsyad</strong> untuk
-              membantu anak kos dan kita semua mengatur gizi dengan jujur dan hangat.
+              "Gizi di Ujung Jari" — Membantu Anda memahami apa yang masuk ke
+              tubuh dengan cara yang ramah, jujur, dan hangat.
             </p>
           </div>
           <div>
@@ -47,12 +47,12 @@ export const Footer = () => {
               Email: halo@gigizi.id
             </p>
             <p className="text-sm opacity-80">
-              Dibuat dengan 🥗 oleh Irsyad untuk Indonesia Sehat.
+              Dibuat dengan 🥗 untuk Indonesia Sehat.
             </p>
           </div>
         </div>
         <div className="border-t border-background-warm/10 mt-12 pt-8 text-center text-xs opacity-60">
-          <p>&copy; {new Date().getFullYear()} GIGIZI by Irsyad. Hak Cipta Dilindungi.</p>
+          <p>&copy; 2026 GIGIZI by Irsyad. Hak Cipta Dilindungi.</p>
         </div>
       </div>
     </footer>

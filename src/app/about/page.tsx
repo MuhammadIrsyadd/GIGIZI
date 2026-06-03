@@ -1,4 +1,4 @@
-import { Salad, Heart, Coffee, Leaf, User } from "lucide-react";
+import { Salad, Heart, Coffee, Leaf } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -17,16 +17,6 @@ export default function AboutPage() {
       </header>
 
       <div className="prose prose-lg max-w-none text-text-dark/80 leading-relaxed space-y-8">
-        <section className="bg-white p-10 rounded-[3rem] border border-text-dark/5 shadow-sm">
-          <h2 className="text-3xl font-playfair font-bold text-text-dark mb-4 flex items-center gap-3">
-            <User className="w-6 h-6 text-primary" />
-            Sosok di Balik GIGIZI
-          </h2>
-          <p>
-            GIGIZI dirancang dan dibangun oleh <strong>Irsyad</strong>. Proyek ini bukan sekadar tugas teknis, melainkan sebuah misi pribadi untuk membawa kesadaran kesehatan ke tengah masyarakat Indonesia melalui teknologi yang sederhana namun bermakna.
-          </p>
-        </section>
-
         <section className="bg-secondary/10 p-10 rounded-[3rem] border border-secondary/20">
           <h2 className="text-3xl font-playfair font-bold text-text-dark mb-4 flex items-center gap-3">
             <Coffee className="w-6 h-6 text-secondary" />
@@ -36,7 +26,7 @@ export default function AboutPage() {
             GIGIZI lahir dari realita kehidupan seorang <strong>anak kos</strong>. Terbatasnya pilihan makanan, budget yang harus diatur, namun tetap memiliki keinginan kuat untuk <strong>hidup sehat</strong> adalah tantangan sehari-hari.
           </p>
           <p>
-            Irsyad menyadari bahwa banyak rekan sesama anak kos yang ingin mulai hidup sehat namun bingung harus mulai dari mana. Apakah menu warteg tadi sudah cukup protein? Berapa kalori dadar jagung yang baru dimakan? Pertanyaan-pertanyaan inilah yang memicu lahirnya GIGIZI — sebuah alat yang membantu siapa saja, terutama anak kos, untuk mengatur pola gizi mereka tanpa rasa takut atau bingung.
+            Aplikasi ini dirancang untuk membantu siapa saja yang ingin mulai hidup sehat namun bingung harus mulai dari mana. Apakah menu warteg tadi sudah cukup protein? Berapa kalori dadar jagung yang baru dimakan? Pertanyaan-pertanyaan inilah yang memicu lahirnya GIGIZI — sebuah alat yang membantu siapa saja untuk mengatur pola gizi mereka tanpa rasa takut atau bingung.
           </p>
         </section>
 
@@ -55,10 +45,10 @@ export default function AboutPage() {
 
         <section className="bg-primary text-background-warm p-12 rounded-[3rem] text-center shadow-xl">
           <h2 className="text-3xl font-playfair font-bold mb-4 italic">
-            "Sehat itu dimulai dari piring anak kos."
+            "Sehat itu dimulai dari piring Anda hari ini."
           </h2>
           <p className="opacity-90 max-w-2xl mx-auto">
-            GIGIZI percaya bahwa keterbatasan bukan penghalang untuk hidup sehat. Bersama Irsyad, mari kita mulai perjalanan gizi ini, satu gigitan pada satu waktu.
+            GIGIZI percaya bahwa keterbatasan bukan penghalang untuk hidup sehat. Mari kita mulai perjalanan gizi ini, satu gigitan pada satu waktu.
           </p>
         </section>
       </div>

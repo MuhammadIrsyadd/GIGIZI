@@ -2,11 +2,8 @@
 
 GIGIZI adalah platform kalkulator nutrisi yang dirancang khusus untuk masyarakat Indonesia. Dengan fokus pada bahan makanan lokal dan masakan sehari-hari (seperti menu Warteg), GIGIZI membantu siapa saja memahami apa yang masuk ke tubuh mereka dengan cara yang ramah, jujur, dan hangat.
 
-## 👨‍💻 Sosok di Balik GIGIZI
-Dibuat dengan 🥗 dan semangat hidup sehat oleh **Irsyad**.
-
 ## 💡 Asal Muasal: Kisah Anak Kos
-GIGIZI lahir dari realita kehidupan seorang **anak kos**. Menghadapi tantangan dalam mengatur pola makan sehat di tengah keterbatasan pilihan dan budget, Irsyad menciptakan platform ini untuk membantu sesama anak kos (dan siapa pun) agar bisa memantau asupan gizi mereka dengan mudah. 
+GIGIZI lahir dari realita kehidupan seorang **anak kos**. Menghadapi tantangan dalam mengatur pola makan sehat di tengah keterbatasan pilihan dan budget, platform ini diciptakan untuk membantu sesama anak kos (dan siapa pun) agar bisa memantau asupan gizi mereka dengan mudah. 
 
 Aplikasi ini mengusung filosofi **"Dapur Digital"** — sebuah tempat yang hangat dan tidak kaku untuk merencanakan kesehatan masa depan.
 
@@ -48,4 +45,4 @@ Aplikasi ini mengusung filosofi **"Dapur Digital"** — sebuah tempat yang hanga
 
 ---
 
-**Dibuat oleh Irsyad untuk Indonesia yang lebih sehat.** 🇮🇩
+**&copy; 2026 GIGIZI by Irsyad. Hak Cipta Dilindungi.**
