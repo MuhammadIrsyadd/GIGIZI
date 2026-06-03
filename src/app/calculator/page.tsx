@@ -13,6 +13,9 @@ import {
   Download,
   X,
   CheckCircle,
+  TrendingUp,
+  TrendingDown,
+  Target
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -147,6 +150,22 @@ function CalculatorContent() {
       { name: "Karbohidrat", value: totals.carbs },
     ].filter((item) => item.value > 0);
   }, [totals]);
+
+  // Status helper logic for UI labels
+  const getStatus = (val: number, type: 'protein' | 'fat' | 'carbs' | 'fiber' | 'calories') => {
+    if (val === 0) return null;
+    const thresholds = {
+        protein: { min: 15, max: 30 },
+        fat: { min: 5, max: 25 },
+        carbs: { min: 40, max: 90 },
+        fiber: { min: 4, max: 10 },
+        calories: { min: 400, max: 750 }
+    };
+    const t = thresholds[type];
+    if (val < t.min) return { label: "Kurang", color: "text-secondary", icon: <TrendingDown className="w-3 h-3" /> };
+    if (val > t.max) return { label: "Berlebih", color: "text-accent", icon: <TrendingUp className="w-3 h-3" /> };
+    return { label: "Ideal", color: "text-primary", icon: <Target className="w-3 h-3" /> };
+  };
 
   const handleSaveMenu = () => {
     if (!menuName || selectedIngredients.length === 0) return;
@@ -421,6 +440,14 @@ function CalculatorContent() {
           <div className="sticky top-24 space-y-8">
             <div className="bg-primary text-background-warm p-10 rounded-[3rem] shadow-2xl relative overflow-hidden group">
               <div className="relative z-10 text-center">
+                <div className="flex justify-center mb-2">
+                    {getStatus(totals.calories, 'calories') && (
+                        <div className={cn("px-3 py-1 rounded-full bg-white/10 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1", getStatus(totals.calories, 'calories')?.color.replace('text-', 'text-'))}>
+                            {getStatus(totals.calories, 'calories')?.icon}
+                            {getStatus(totals.calories, 'calories')?.label}
+                        </div>
+                    )}
+                </div>
                 <h4 className="uppercase text-xs font-space-mono tracking-[0.3em] opacity-70 mb-2">
                   Total Kalori
                 </h4>
@@ -486,33 +513,67 @@ function CalculatorContent() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10 transition-colors hover:bg-primary/10">
-                  <div className="text-[10px] uppercase font-space-mono text-primary font-bold mb-1 tracking-widest">
-                    Protein
+                {/* Protein Card */}
+                <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10 transition-all hover:shadow-md relative overflow-hidden group">
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-[10px] uppercase font-space-mono text-primary font-bold tracking-widest">Protein</div>
+                    {getStatus(totals.protein, 'protein') && (
+                        <div className={cn("flex items-center gap-0.5 text-[8px] font-bold uppercase", getStatus(totals.protein, 'protein')?.color)}>
+                            {getStatus(totals.protein, 'protein')?.icon}
+                            {getStatus(totals.protein, 'protein')?.label}
+                        </div>
+                    )}
                   </div>
                   <div className="text-2xl font-bold text-text-dark">
                     {totals.protein.toFixed(1)}g
                   </div>
+                  <div className="absolute -bottom-2 -right-2 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <CalcIcon className="w-12 h-12" />
+                  </div>
                 </div>
-                <div className="bg-secondary/5 p-4 rounded-2xl border border-secondary/10 transition-colors hover:bg-secondary/10">
-                  <div className="text-[10px] uppercase font-space-mono text-secondary font-bold mb-1 tracking-widest">
-                    Lemak
+
+                {/* Lemak Card */}
+                <div className="bg-secondary/5 p-4 rounded-2xl border border-secondary/10 transition-all hover:shadow-md group">
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-[10px] uppercase font-space-mono text-secondary font-bold tracking-widest">Lemak</div>
+                    {getStatus(totals.fat, 'fat') && (
+                        <div className={cn("flex items-center gap-0.5 text-[8px] font-bold uppercase", getStatus(totals.fat, 'fat')?.color)}>
+                            {getStatus(totals.fat, 'fat')?.icon}
+                            {getStatus(totals.fat, 'fat')?.label}
+                        </div>
+                    )}
                   </div>
                   <div className="text-2xl font-bold text-text-dark">
                     {totals.fat.toFixed(1)}g
                   </div>
                 </div>
-                <div className="bg-accent/5 p-4 rounded-2xl border border-accent/10 transition-colors hover:bg-accent/10">
-                  <div className="text-[10px] uppercase font-space-mono text-accent font-bold mb-1 tracking-widest">
-                    Karbo
+
+                {/* Karbo Card */}
+                <div className="bg-accent/5 p-4 rounded-2xl border border-accent/10 transition-all hover:shadow-md group">
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-[10px] uppercase font-space-mono text-accent font-bold tracking-widest">Karbo</div>
+                    {getStatus(totals.carbs, 'carbs') && (
+                        <div className={cn("flex items-center gap-0.5 text-[8px] font-bold uppercase", getStatus(totals.carbs, 'carbs')?.color)}>
+                            {getStatus(totals.carbs, 'carbs')?.icon}
+                            {getStatus(totals.carbs, 'carbs')?.label}
+                        </div>
+                    )}
                   </div>
                   <div className="text-2xl font-bold text-text-dark">
                     {totals.carbs.toFixed(1)}g
                   </div>
                 </div>
-                <div className="bg-text-dark/5 p-4 rounded-2xl border border-text-dark/10 transition-colors hover:bg-text-dark/10">
-                  <div className="text-[10px] uppercase font-space-mono text-text-dark/40 font-bold mb-1 tracking-widest">
-                    Serat
+
+                {/* Serat Card */}
+                <div className="bg-text-dark/5 p-4 rounded-2xl border border-text-dark/10 transition-all hover:shadow-md group">
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-[10px] uppercase font-space-mono text-text-dark/40 font-bold tracking-widest">Serat</div>
+                    {getStatus(totals.fiber, 'fiber') && (
+                        <div className={cn("flex items-center gap-0.5 text-[8px] font-bold uppercase", getStatus(totals.fiber, 'fiber')?.color)}>
+                            {getStatus(totals.fiber, 'fiber')?.icon}
+                            {getStatus(totals.fiber, 'fiber')?.label}
+                        </div>
+                    )}
                   </div>
                   <div className="text-2xl font-bold text-text-dark">
                     {totals.fiber.toFixed(1)}g

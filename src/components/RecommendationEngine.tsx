@@ -41,75 +41,77 @@ export const RecommendationEngine = ({
       return list;
     }
 
+    // --- SUCCESS (Balanced Meal) logic ---
+    const isBalanced = 
+      totals.calories >= 350 && 
+      totals.calories <= 800 && 
+      totals.protein >= 15 && 
+      totals.fiber >= 3 && 
+      totals.fat <= 35 &&
+      totals.carbs >= 40;
+
+    if (isBalanced) {
+      return [{
+        type: "success",
+        title: "Piring Sempurna!",
+        desc: "Luar biasa! Menu ini sudah sangat seimbang. Kalori, protein, dan serat berada dalam rentang ideal untuk satu porsi makan.",
+      } as FeedbackItem];
+    }
+
     // --- WARNINGS (Excessive Macros) ---
-    
-    // High Calories (> 800 kcal)
-    if (totals.calories > 800) {
+    if (totals.calories > 850) {
       list.push({
         type: "warning",
-        title: "Kalori Cukup Tinggi",
-        desc: "Porsi ini mengandung >800 kkal. Jika ini bukan satu-satunya makanan beratmu, pertimbangkan untuk mengurangi porsi atau bahan berminyak.",
+        title: "Kalori Sangat Tinggi",
+        desc: "Porsi ini melebihi 850 kkal. Jika ingin lebih sehat, coba kurangi porsi nasi atau gorengan.",
       });
     }
 
-    // High Carbs (> 100g)
-    if (totals.carbs > 100) {
+    if (totals.carbs > 110) {
       list.push({
         type: "warning",
-        title: "Karbohidrat Berlebih",
-        desc: "Karbohidratmu sangat tinggi. Terlalu banyak karbohidrat bisa membuat cepat mengantuk. Coba kurangi nasi atau mie.",
+        title: "Karbohidrat Tinggi",
+        desc: "Terlalu banyak karbohidrat bisa membuat cepat mengantuk. Pertimbangkan kurangi porsi karbo Anda.",
       });
     }
 
-    // High Fat (> 35g)
-    if (totals.fat > 35) {
+    if (totals.fat > 40) {
       list.push({
         type: "warning",
-        title: "Lemak Cukup Banyak",
-        desc: "Kandungan lemak tinggi. Batasi gorengan atau masakan bersantan kental agar jantung tetap sehat.",
+        title: "Lemak Tinggi",
+        desc: "Kandungan lemak cukup tinggi. Batasi masakan bersantan kental atau gorengan.",
       });
     }
 
     // --- SUGGESTIONS (Missing Macros) ---
-
-    // Low Protein
     if (totals.protein < 15) {
       list.push({
         type: "info",
         title: "Butuh Protein?",
-        desc: "Proteinmu masih rendah. Tambahkan Tempe, Tahu, atau Dada Ayam agar otot tetap terjaga.",
+        desc: "Protein membantu rasa kenyang lebih lama. Coba tambahkan Tempe atau Telur.",
         ingredientId: "tempe",
       });
     }
 
-    // Low Fiber
     if (totals.fiber < 3) {
       list.push({
         type: "info",
         title: "Kurang Serat?",
-        desc: "Tambahkan sayuran hijau seperti Bayam atau Kangkung untuk pencernaan yang lebih lancar.",
+        desc: "Sayuran hijau sangat penting untuk pencernaan. Coba tambahkan Bayam atau Kangkung.",
         ingredientId: "bayam",
       });
     }
 
-    // --- SUCCESS (Balanced Meal) ---
-    const isBalanced = 
-      totals.calories >= 400 && 
-      totals.calories <= 750 && 
-      totals.protein >= 20 && 
-      totals.fiber >= 5 && 
-      totals.fat <= 30;
-
-    if (isBalanced) {
-      const successItem: FeedbackItem = {
-        type: "success",
-        title: "Piring Sempurna!",
-        desc: "Luar biasa! Kombinasi nutrisimu sudah sangat seimbang antara kalori, protein, dan serat. Pertahankan pola ini!",
-      };
-      return [successItem];
+    if (totals.carbs < 30) {
+      list.push({
+        type: "info",
+        title: "Energi Rendah?",
+        desc: "Karbohidrat adalah sumber energi utama. Coba tambahkan sedikit nasi atau singkong.",
+        ingredientId: "nasi-putih",
+      });
     }
 
-    return list.slice(0, 3);
+    return list.slice(0, 2);
   }, [currentItems, totals]);
 
   if (feedback.length === 0) return null;
@@ -120,7 +122,7 @@ export const RecommendationEngine = ({
         <div 
           key={idx} 
           className={cn(
-            "p-6 rounded-[2rem] border transition-all",
+            "p-6 rounded-[2rem] border transition-all animate-in fade-in slide-in-from-bottom-2",
             item.type === "success" && "bg-primary/10 border-primary/20",
             item.type === "warning" && "bg-accent/10 border-accent/20",
             item.type === "info" && "bg-secondary/10 border-secondary/20"
@@ -137,13 +139,13 @@ export const RecommendationEngine = ({
               item.type === "warning" && "text-accent",
               item.type === "info" && "text-secondary"
             )}>
-              {item.type === "success" ? "Status Gizi" : "Saran GIGIZI"}
+              {item.type === "success" ? "Status Gizi: Luar Biasa" : "Panduan GIZI"}
             </h4>
           </div>
 
           <div className="flex gap-4 items-start">
             <div className="flex-grow">
-              <div className="font-bold text-text-dark text-base mb-1">{item.title}</div>
+              <div className="font-bold text-text-dark text-lg mb-1">{item.title}</div>
               <p className="text-sm text-text-dark/70 leading-relaxed italic">
                 {item.desc}
               </p>
@@ -155,7 +157,6 @@ export const RecommendationEngine = ({
                   if (ing) onAdd(ing);
                 }}
                 className="p-3 bg-white text-secondary rounded-2xl hover:bg-secondary hover:text-white transition-all shadow-sm border border-secondary/10 group"
-                title="Tambahkan Bahan"
               >
                 <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
               </button>
