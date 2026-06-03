@@ -24,7 +24,7 @@ export const Navbar = () => {
         <div className="flex justify-between h-20 items-center">
           <Link href="/" className="flex items-center gap-3 group">
             <Logo className="group-hover:rotate-12 transition-transform duration-500" size={48} />
-            <span className="text-3xl font-playfair font-bold text-text-dark tracking-tighter dark:text-zinc-100">
+            <span className="text-3xl font-playfair font-bold text-foreground tracking-tighter dark:text-zinc-100">
               GIGIZI
             </span>
           </Link>
@@ -35,7 +35,7 @@ export const Navbar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-text-dark/70 hover:text-primary transition-colors font-bold text-sm uppercase tracking-widest dark:text-zinc-400 dark:hover:text-primary"
+                className="text-foreground/70 hover:text-primary transition-colors font-bold text-sm uppercase tracking-widest dark:text-zinc-400 dark:hover:text-primary"
               >
                 {link.name}
               </Link>
@@ -44,7 +44,7 @@ export const Navbar = () => {
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             >
-              {theme === "light" ? <Moon className="w-5 h-5 text-text-dark" /> : <Sun className="w-5 h-5 text-zinc-100" />}
+              {theme === "light" ? <Moon className="w-5 h-5 text-foreground" /> : <Sun className="w-5 h-5 text-zinc-100" />}
             </button>
           </div>
 
@@ -54,11 +54,11 @@ export const Navbar = () => {
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
             >
-              {theme === "light" ? <Moon className="w-5 h-5 text-text-dark" /> : <Sun className="w-5 h-5 text-zinc-100" />}
+              {theme === "light" ? <Moon className="w-5 h-5 text-foreground" /> : <Sun className="w-5 h-5 text-zinc-100" />}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-text-dark hover:text-primary transition-colors dark:text-zinc-100"
+              className="p-2 text-foreground hover:text-primary transition-colors dark:text-zinc-100"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -74,7 +74,7 @@ export const Navbar = () => {
               key={link.href}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className="block text-text-dark/70 hover:text-primary transition-colors font-bold text-lg dark:text-zinc-300 dark:hover:text-primary"
+              className="block text-foreground/70 hover:text-primary transition-colors font-bold text-lg dark:text-zinc-300 dark:hover:text-primary"
             >
               {link.name}
             </Link>
