@@ -46,9 +46,6 @@ Aplikasi ini mengusung filosofi **"Dapur Digital"** — sebuah tempat yang hanga
    ```
 4. Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
-## 📦 Deployment
-Proyek ini siap dideploy ke **Vercel** atau platform hosting lainnya. Cukup hubungkan repository GitHub Anda ke Vercel dan nikmati kemudahannya.
-
 ---
 
 **Dibuat oleh Irsyad untuk Indonesia yang lebih sehat.** 🇮🇩
