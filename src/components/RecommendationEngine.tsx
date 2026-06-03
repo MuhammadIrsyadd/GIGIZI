@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Lightbulb, Plus, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Lightbulb, Plus, AlertTriangle, CheckCircle2, Sparkles, Utensils } from "lucide-react";
 import { Ingredient, ingredients } from "@/data/ingredients";
 
 interface RecommendationEngineProps {
@@ -17,7 +17,7 @@ interface RecommendationEngineProps {
 }
 
 interface FeedbackItem {
-  type: "info" | "warning" | "success";
+  type: "info" | "warning" | "success" | "neutral";
   title: string;
   desc: string;
   ingredientId?: string;
@@ -31,87 +31,96 @@ export const RecommendationEngine = ({
   const feedback = useMemo(() => {
     const list: FeedbackItem[] = [];
 
+    // --- 1. Empty State ---
     if (currentItems.length === 0) {
       list.push({
         type: "info",
-        title: "Piring Kosong?",
-        desc: "Mulai dengan Karbohidrat kompleks seperti Nasi Merah atau Singkong.",
+        title: "Dapur Siap Digunakan!",
+        desc: "Tambahkan nasi atau sumber karbohidrat favoritmu sebagai langkah pertama menuju hidup sehat.",
         ingredientId: "nasi-merah",
       });
       return list;
     }
 
-    // --- SUCCESS (Balanced Meal) logic ---
-    const isBalanced = 
-      totals.calories >= 350 && 
-      totals.calories <= 800 && 
-      totals.protein >= 15 && 
-      totals.fiber >= 3 && 
-      totals.fat <= 35 &&
-      totals.carbs >= 40;
+    // --- 2. Perfect Plate Check ---
+    const isPerfect = 
+      totals.calories >= 450 && 
+      totals.calories <= 750 && 
+      totals.protein >= 20 && 
+      totals.fiber >= 5 && 
+      totals.fat >= 10 &&
+      totals.fat <= 30 &&
+      totals.carbs >= 45;
 
-    if (isBalanced) {
+    if (isPerfect) {
       return [{
         type: "success",
-        title: "Piring Sempurna!",
-        desc: "Luar biasa! Menu ini sudah sangat seimbang. Kalori, protein, dan serat berada dalam rentang ideal untuk satu porsi makan.",
+        title: "Karya Seni Nutrisi!",
+        desc: "Selamat! Piring ini adalah definisi gizi seimbang. Porsi kalori, makro, dan serat Anda sudah dalam sinkronisasi sempurna.",
       } as FeedbackItem];
     }
 
-    // --- WARNINGS (Excessive Macros) ---
-    if (totals.calories > 850) {
-      list.push({
-        type: "warning",
-        title: "Kalori Sangat Tinggi",
-        desc: "Porsi ini melebihi 850 kkal. Jika ingin lebih sehat, coba kurangi porsi nasi atau gorengan.",
-      });
+    // --- 3. Warnings (Excessive) ---
+    if (totals.calories > 900) {
+        list.push({ type: "warning", title: "Porsi Sangat Besar", desc: "Satu porsi ini cukup berat. Jika ini makan siang, pastikan aktivitas fisikmu juga tinggi hari ini." });
+    }
+    if (totals.carbs > 120) {
+        list.push({ type: "warning", title: "Waspada 'Food Coma'", desc: "Karbohidrat yang sangat tinggi bisa memicu lonjakan gula darah dan membuatmu sangat mengantuk." });
+    }
+    if (totals.fat > 45) {
+        list.push({ type: "warning", title: "Lemak Sangat Tinggi", desc: "Hati-hati dengan asupan lemak jenuh. Coba kurangi gorengan untuk menjaga kesehatan pembuluh darah." });
     }
 
-    if (totals.carbs > 110) {
-      list.push({
-        type: "warning",
-        title: "Karbohidrat Tinggi",
-        desc: "Terlalu banyak karbohidrat bisa membuat cepat mengantuk. Pertimbangkan kurangi porsi karbo Anda.",
-      });
-    }
-
-    if (totals.fat > 40) {
-      list.push({
-        type: "warning",
-        title: "Lemak Tinggi",
-        desc: "Kandungan lemak cukup tinggi. Batasi masakan bersantan kental atau gorengan.",
-      });
-    }
-
-    // --- SUGGESTIONS (Missing Macros) ---
-    if (totals.protein < 15) {
+    // --- 4. Critical Suggestions (Missing) ---
+    if (totals.protein < 10) {
       list.push({
         type: "info",
-        title: "Butuh Protein?",
-        desc: "Protein membantu rasa kenyang lebih lama. Coba tambahkan Tempe atau Telur.",
+        title: "Butuh Pondasi Protein",
+        desc: "Protein sangat minim. Tambahkan lauk pauk seperti Tempe, Tahu, atau Ayam untuk membantu metabolisme tubuh.",
         ingredientId: "tempe",
       });
     }
-
-    if (totals.fiber < 3) {
+    if (totals.fiber < 2) {
       list.push({
         type: "info",
-        title: "Kurang Serat?",
-        desc: "Sayuran hijau sangat penting untuk pencernaan. Coba tambahkan Bayam atau Kangkung.",
-        ingredientId: "bayam",
+        title: "Mana Sayurnya?",
+        desc: "Serat hampir tidak ada. Tambahkan Sayur Asem atau Tumis Kangkung agar pencernaanmu tetap sehat.",
+        ingredientId: "kangkung",
       });
     }
 
-    if (totals.carbs < 30) {
-      list.push({
-        type: "info",
-        title: "Energi Rendah?",
-        desc: "Karbohidrat adalah sumber energi utama. Coba tambahkan sedikit nasi atau singkong.",
-        ingredientId: "nasi-putih",
-      });
+    // --- 5. "Almost There" / Educational Tips (When it's neither perfect nor bad) ---
+    // If the list is still empty or has only 1 item, add proactive/educational tips
+    if (list.length < 2) {
+        // Tip about Fruit
+        const hasFruit = currentItems.some(i => ingredients.find(ing => ing.id === i.id)?.category === "Buah");
+        if (!hasFruit) {
+            list.push({
+                type: "neutral",
+                title: "Tips Pencuci Mulut",
+                desc: "Ingin kesegaran ekstra? Tambahkan Pepaya atau Pisang untuk asupan vitamin alami setelah makan.",
+                ingredientId: "pepaya"
+            });
+        }
+
+        // Tip about hydration (educational)
+        list.push({
+            type: "neutral",
+            title: "Jangan Lupa Minum",
+            desc: "Nutrisi di piringmu sudah mulai tertata. Imbangi dengan 1-2 gelas air putih agar penyerapan nutrisi maksimal.",
+        });
+
+        // Tip about "Almost Perfect"
+        if (totals.calories > 0 && !isPerfect && list.length < 3) {
+            list.push({
+                type: "neutral",
+                title: "Selangkah Lagi Menuju Sempurna",
+                desc: "Menu Anda sudah lumayan baik. Coba sesuaikan porsi serat atau protein untuk mencapai status 'Piring Sempurna'.",
+            });
+        }
     }
 
-    return list.slice(0, 2);
+    return list.slice(0, 3);
   }, [currentItems, totals]);
 
   if (feedback.length === 0) return null;
@@ -125,21 +134,24 @@ export const RecommendationEngine = ({
             "p-6 rounded-[2rem] border transition-all animate-in fade-in slide-in-from-bottom-2",
             item.type === "success" && "bg-primary/10 border-primary/20",
             item.type === "warning" && "bg-accent/10 border-accent/20",
-            item.type === "info" && "bg-secondary/10 border-secondary/20"
+            item.type === "info" && "bg-secondary/10 border-secondary/20",
+            item.type === "neutral" && "bg-white border-text-dark/5 shadow-sm"
           )}
         >
           <div className="flex items-center gap-3 mb-3">
-            {item.type === "success" && <CheckCircle2 className="w-5 h-5 text-primary" />}
+            {item.type === "success" && <Sparkles className="w-5 h-5 text-primary" />}
             {item.type === "warning" && <AlertTriangle className="w-5 h-5 text-accent" />}
             {item.type === "info" && <Lightbulb className="w-5 h-5 text-secondary" />}
+            {item.type === "neutral" && <Utensils className="w-5 h-5 text-text-dark/40" />}
             
             <h4 className={cn(
               "font-bold text-sm uppercase tracking-widest",
               item.type === "success" && "text-primary",
               item.type === "warning" && "text-accent",
-              item.type === "info" && "text-secondary"
+              item.type === "info" && "text-secondary",
+              item.type === "neutral" && "text-text-dark/40"
             )}>
-              {item.type === "success" ? "Status Gizi: Luar Biasa" : "Panduan GIZI"}
+              {item.type === "success" ? "Pencapaian" : item.type === "neutral" ? "Saran Tambahan" : "Panduan GIZI"}
             </h4>
           </div>
 
