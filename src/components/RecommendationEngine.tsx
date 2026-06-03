@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Lightbulb, Plus, AlertTriangle, CheckCircle2, Info } from "lucide-react";
+import { Lightbulb, Plus, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { Ingredient, ingredients } from "@/data/ingredients";
 
 interface RecommendationEngineProps {
@@ -16,13 +16,20 @@ interface RecommendationEngineProps {
   onAdd: (ingredient: Ingredient) => void;
 }
 
+interface FeedbackItem {
+  type: "info" | "warning" | "success";
+  title: string;
+  desc: string;
+  ingredientId?: string;
+}
+
 export const RecommendationEngine = ({
   currentItems,
   totals,
   onAdd,
 }: RecommendationEngineProps) => {
   const feedback = useMemo(() => {
-    const list: { type: "info" | "warning" | "success"; title: string; desc: string; ingredientId?: string }[] = [];
+    const list: FeedbackItem[] = [];
 
     if (currentItems.length === 0) {
       list.push({
@@ -36,7 +43,7 @@ export const RecommendationEngine = ({
 
     // --- WARNINGS (Excessive Macros) ---
     
-    // High Calories (Example threshold for single meal > 800 kcal)
+    // High Calories (> 800 kcal)
     if (totals.calories > 800) {
       list.push({
         type: "warning",
@@ -45,7 +52,7 @@ export const RecommendationEngine = ({
       });
     }
 
-    // High Carbs (> 100g in a single meal)
+    // High Carbs (> 100g)
     if (totals.carbs > 100) {
       list.push({
         type: "warning",
@@ -54,7 +61,7 @@ export const RecommendationEngine = ({
       });
     }
 
-    // High Fat (> 35g in a single meal)
+    // High Fat (> 35g)
     if (totals.fat > 35) {
       list.push({
         type: "warning",
@@ -94,16 +101,15 @@ export const RecommendationEngine = ({
       totals.fat <= 30;
 
     if (isBalanced) {
-      // Clear warnings if it's perfectly balanced according to these specific rules
-      // (Or we can just append it as a top priority)
-      return [{
+      const successItem: FeedbackItem = {
         type: "success",
         title: "Piring Sempurna!",
         desc: "Luar biasa! Kombinasi nutrisimu sudah sangat seimbang antara kalori, protein, dan serat. Pertahankan pola ini!",
-      }];
+      };
+      return [successItem];
     }
 
-    return list.slice(0, 3); // Show top 3 relevant pieces of feedback
+    return list.slice(0, 3);
   }, [currentItems, totals]);
 
   if (feedback.length === 0) return null;
@@ -161,7 +167,6 @@ export const RecommendationEngine = ({
   );
 };
 
-// Helper function to handle conditional classes
 function cn(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
