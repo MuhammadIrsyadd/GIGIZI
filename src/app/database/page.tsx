@@ -44,6 +44,35 @@ export default function DatabasePage() {
         </p>
       </header>
 
+      {/* Data Source Transparency & Disclaimer */}
+      <section className="mb-12 bg-primary/5 border border-primary/10 p-8 rounded-[3rem]">
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          <div className="flex-shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm">
+            <Info className="w-6 h-6 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-xl font-playfair font-bold text-text-dark mb-3">
+              Mengenai Akurasi & Sumber Data
+            </h2>
+            <div className="text-sm text-text-dark/70 space-y-4 leading-relaxed italic">
+              <p>
+                Informasi gizi di piring digital Anda diambil dari sumber terpercaya seperti 
+                <strong> TKPI (Tabel Komposisi Pangan Indonesia) </strong> milik Kemenkes RI dan 
+                <strong> USDA FoodData Central</strong>.
+              </p>
+              <p>
+                Penting untuk dipahami bahwa nilai gizi pada <strong>masakan jadi </strong> (seperti Rendang atau Orek Tempe) 
+                adalah <strong>estimasi rata-rata</strong>. Kandungan kalori nyata bisa berbeda tergantung pada metode memasak, 
+                jumlah minyak, dan bumbu spesifik yang digunakan oleh setiap warung atau dapur.
+              </p>
+              <p className="not-italic font-bold text-primary">
+                GIGIZI hadir sebagai alat edukasi dan panduan awal, bukan sebagai referensi medis mutlak.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Search and Filter */}
       <div className="flex flex-col md:flex-row gap-6 mb-12">
         <div className="relative flex-grow">
