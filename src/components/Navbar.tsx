@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Salad, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
+import { Logo } from "./Logo";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,9 +20,9 @@ export const Navbar = () => {
     <nav className="border-b border-text-dark/10 bg-background-warm/80 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <Link href="/" className="flex items-center gap-2 group">
-            <Salad className="w-8 h-8 text-primary group-hover:rotate-12 transition-transform" />
-            <span className="text-2xl font-playfair font-bold text-text-dark tracking-tight">
+          <Link href="/" className="flex items-center gap-3 group">
+            <Logo className="group-hover:rotate-12 transition-transform duration-500" size={48} />
+            <span className="text-3xl font-playfair font-bold text-text-dark tracking-tighter">
               GIGIZI
             </span>
           </Link>
