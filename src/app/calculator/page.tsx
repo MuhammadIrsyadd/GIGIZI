@@ -27,7 +27,6 @@ import {
 } from "recharts";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import html2canvas from "html2canvas";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecommendationEngine } from "@/components/RecommendationEngine";
 import { WeeklyTrends } from "@/components/WeeklyTrends";
@@ -210,7 +209,7 @@ function CalculatorContent() {
     localStorage.setItem("gigizi_menus", JSON.stringify(updatedMenus));
   };
 
-  const downloadSummary = () => {
+  const exportAsImage = () => {
     if (selectedIngredients.length === 0) return;
     
     let summary = `RINGKASAN NUTRISI GIGIZI\n`;
@@ -663,69 +662,13 @@ function CalculatorContent() {
         )}
       </AnimatePresence>
       {/* Hidden Share Card for Export */}
-      <div className="fixed left-[-9999px] top-[-9999px] opacity-100 w-[600px] h-[800px] overflow-hidden">
-        <div
-          ref={shareCardRef}
-          className="w-[600px] bg-background-warm p-12 flex flex-col gap-8 rounded-[3rem]"
-          style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/felt.png")' }}
-        >
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md">
-                <CalcIcon className="w-6 h-6 text-background-warm" />
-              </div>
-              <span className="text-2xl font-playfair font-bold text-text-dark">GIGIZI</span>
-            </div>
-            <div className="text-[10px] font-space-mono text-text-dark/40 uppercase tracking-[0.3em]">
-              {new Date().toLocaleDateString("id-ID")}
-            </div>
-          </div>
-
-          <div className="text-center py-6">
-            <h2 className="text-3xl font-playfair font-bold text-text-dark mb-1">
-              {menuName || "Ringkasan Nutrisi"}
-            </h2>
-            <div className="text-primary font-space-mono text-[10px] uppercase tracking-[0.4em] font-bold">
-              Dapur Digital Anda
-            </div>
-          </div>
-
-          <div className="bg-primary text-background-warm p-12 rounded-[2.5rem] shadow-2xl text-center relative overflow-hidden">
-            <h4 className="uppercase text-[10px] font-space-mono tracking-[0.5em] opacity-70 mb-2">
-              Total Kalori
-            </h4>
-            <div className="text-8xl font-playfair font-bold">
-              {Math.round(totals.calories)}
-              <span className="text-lg font-space-mono opacity-50 ml-2">kkal</span>
-            </div>
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
-              <div className="text-[10px] uppercase font-space-mono text-primary font-bold mb-1 tracking-widest">Protein</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.protein.toFixed(1)}g</div>
-            </div>
-            <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
-              <div className="text-[10px] uppercase font-space-mono text-secondary font-bold mb-1 tracking-widest">Lemak</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.fat.toFixed(1)}g</div>
-            </div>
-            <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
-              <div className="text-[10px] uppercase font-space-mono text-accent font-bold mb-1 tracking-widest">Karbo</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.carbs.toFixed(1)}g</div>
-            </div>
-            <div className="bg-white/70 p-6 rounded-3xl border border-text-dark/5 flex flex-col items-center shadow-sm">
-              <div className="text-[10px] uppercase font-space-mono text-text-dark/30 font-bold mb-1 tracking-widest">Serat</div>
-              <div className="text-3xl font-bold text-text-dark">{totals.fiber.toFixed(1)}g</div>
-            </div>
-          </div>
-
-          <div className="mt-4 pt-8 border-t border-text-dark/10 text-center">
-            <div className="text-[10px] text-text-dark/30 font-space-mono uppercase italic tracking-widest">
-              Dihitung dengan GIGIZI — Gizi di Ujung Jari
-            </div>
-          </div>
-        </div>
+      <div className="absolute top-0 left-0 -z-50 opacity-0 pointer-events-none" style={{ width: '600px' }}>
+          <ExportCard 
+            ref={shareCardRef}
+            items={selectedIngredients.map(i => ({ name: i.name, weight: i.weight, calories: i.calories }))}
+            totals={totals}
+            menuName={menuName}
+          />
       </div>
     </div>
   );
