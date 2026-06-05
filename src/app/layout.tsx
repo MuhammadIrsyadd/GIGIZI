@@ -22,8 +22,18 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GIGIZI — Gizi di Ujung Jari",
-  description: "Kalkulator nutrisi bahan makanan lokal Indonesia yang ramah dan jujur.",
+  title: "GIGIZI — Kalkulator Nutrisi & Gizi Anak Kos",
+  description: "GIGIZI adalah kalkulator nutrisi praktis untuk anak kos. Cek kalori, makronutrien, dan dapatkan saran gizi seimbang untuk makanan warteg Anda.",
+  keywords: ["GIGIZI", "Kalkulator Kalori", "Nutrisi Anak Kos", "Gizi Seimbang", "Makanan Warteg", "Hitung Kalori"],
+  authors: [{ name: "Irsyad" }],
+  openGraph: {
+    title: "GIGIZI — Gizi di Ujung Jari",
+    description: "Kalkulator nutrisi praktis untuk anak kos.",
+    url: "https://gigizi.vercel.app",
+    siteName: "GIGIZI",
+    locale: "id_ID",
+    type: "website",
+  },
   manifest: "/manifest.json",
 };
 
