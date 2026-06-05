@@ -210,53 +210,33 @@ function CalculatorContent() {
     localStorage.setItem("gigizi_menus", JSON.stringify(updatedMenus));
   };
 
-  const exportAsImage = async () => {
-    if (!shareCardRef.current || selectedIngredients.length === 0) return;
+  const downloadSummary = () => {
+    if (selectedIngredients.length === 0) return;
     
-    setShowToast("Sedang menyiapkan gambar...");
+    let summary = `RINGKASAN NUTRISI GIGIZI\n`;
+    summary += `Tanggal: ${new Date().toLocaleDateString("id-ID")}\n`;
+    summary += `Menu: ${menuName || "Nutrisi Harian"}\n`;
+    summary += `--------------------------\n`;
+    selectedIngredients.forEach(item => {
+        summary += `- ${item.name}: ${item.weight}g (${Math.round((item.calories * item.weight) / 100)} kkal)\n`;
+    });
+    summary += `--------------------------\n`;
+    summary += `TOTAL KALORI: ${Math.round(totals.calories)} kkal\n`;
+    summary += `Protein: ${totals.protein.toFixed(1)}g\n`;
+    summary += `Lemak: ${totals.fat.toFixed(1)}g\n`;
+    summary += `Karbohidrat: ${totals.carbs.toFixed(1)}g\n`;
+    summary += `Serat: ${totals.fiber.toFixed(1)}g\n`;
+    summary += `--------------------------\n`;
+    summary += `Dibuat dengan GIGIZI — Gizi di Ujung Jari`;
+
+    const blob = new Blob([summary], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `GIGIZI-${menuName || "Nutrisi"}.txt`;
+    link.click();
     
-    try {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Clone the element
-        const clone = shareCardRef.current.cloneNode(true) as HTMLElement;
-        document.body.appendChild(clone);
-        
-        // Apply export-mode class and position
-        clone.classList.add('export-mode');
-        clone.style.position = 'absolute';
-        clone.style.top = '0';
-        clone.style.left = '-9999px';
-        
-        // Explicitly remove background image to prevent CORS error
-        clone.style.backgroundImage = 'none';
-        clone.style.backgroundColor = '#FAF6EF';
-        
-        // Force hex colors to avoid oklab issues
-        clone.style.color = '#2C1810';
-        
-        const canvas = await html2canvas(clone, {
-            backgroundColor: "#FAF6EF",
-            scale: 2,
-            logging: false,
-            useCORS: true,
-            allowTaint: true,
-        });
-        
-        document.body.removeChild(clone);
-        
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = image;
-        link.download = `GIGIZI-${menuName || "Nutrisi"}.png`;
-        link.click();
-        
-        setShowToast("Gambar berhasil diunduh!");
-    } catch (error) {
-        console.error("Export failed", error);
-        setShowToast("Gagal mengunduh gambar.");
-    }
-    
+    setShowToast("Ringkasan berhasil diunduh!");
     setTimeout(() => setShowToast(null), 3000);
   };
 
