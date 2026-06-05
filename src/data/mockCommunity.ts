@@ -47,7 +47,7 @@ export const mockCommunityMenus: CommunityMenu[] = [
     items: [
       { ingredientId: "nasi-putih", weight: 100 },
       { ingredientId: "rendang-sapi", weight: 50 },
-      { ingredientId: "sawi-hijau", weight: 150 },
+      { ingredientId: "sayur-lodeh", weight: 150 },
       { ingredientId: "wortel", weight: 50 },
     ],
     likes: 256,
