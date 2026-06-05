@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   verification: {
-    google: google-site-verification: googlea1d57ae851c0a289.html,
+    google: <meta name="google-site-verification" content="wjVywy-HvCzYXe6LiZS6HQxN1iAbipVLPyE8tYxH5e8" />,
   },
 };
 
