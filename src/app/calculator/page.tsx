@@ -664,7 +664,7 @@ function CalculatorContent() {
         )}
       </AnimatePresence>
       {/* Hidden Share Card for Export */}
-      <div className="absolute top-0 left-0 -z-50 opacity-100 pointer-events-none" style={{ transform: 'translateX(-9999px)' }}>
+      <div className="absolute top-0 left-0 -z-50 opacity-0 pointer-events-none w-[600px] h-[800px] overflow-hidden">
         <div
           ref={shareCardRef}
           className="w-[600px] bg-background-warm p-12 flex flex-col gap-8 rounded-[3rem]"
