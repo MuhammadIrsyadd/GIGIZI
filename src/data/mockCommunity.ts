@@ -67,3 +67,25 @@ export const mockCommunityMenus: CommunityMenu[] = [
     tags: ["Rendah Kalori", "Diet"],
   },
 ];
+
+// Helper to store daily intake for Weekly Trends
+export interface DailyLog {
+    date: string; // YYYY-MM-DD
+    totalCalories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+}
+
+export const saveDailyLog = (log: Omit<DailyLog, 'date'>) => {
+    const logs = JSON.parse(localStorage.getItem("gigizi_weekly_logs") || "[]") as DailyLog[];
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Simple logic: keep latest per day
+    const filteredLogs = logs.filter(l => l.date !== today);
+    filteredLogs.push({ ...log, date: today });
+    
+    // Keep only last 7 days
+    const last7Days = filteredLogs.slice(-7);
+    localStorage.setItem("gigizi_weekly_logs", JSON.stringify(last7Days));
+};

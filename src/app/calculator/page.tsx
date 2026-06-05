@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef, Suspense } from "react";
-import { ingredients, Ingredient } from "@/data/ingredients";
+import { Ingredient } from "@/data/ingredients";
 import Fuse from "fuse.js";
 import {
   Search,
@@ -30,6 +30,9 @@ import { twMerge } from "tailwind-merge";
 import html2canvas from "html2canvas";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecommendationEngine } from "@/components/RecommendationEngine";
+import { WeeklyTrends } from "@/components/WeeklyTrends";
+import { saveDailyLog } from "@/data/mockCommunity";
+import { useIngredients } from "@/hooks/useIngredients";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -50,13 +53,12 @@ interface SavedMenu {
 const COLORS = ["#3D6B4F", "#F5A623", "#E8503A", "#2C1810"];
 
 function CalculatorContent() {
+  const { allIngredients } = useIngredients();
   const searchParams = useSearchParams();
   const router = useRouter();
   
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedIngredients, setSelectedIngredients] = useState<
-    SelectedIngredient[]
-  >([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<SelectedIngredient[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [menuName, setMenuName] = useState("");
@@ -94,11 +96,11 @@ function CalculatorContent() {
 
   const fuse = useMemo(
     () =>
-      new Fuse(ingredients, {
+      new Fuse(allIngredients, {
         keys: ["name", "category"],
         threshold: 0.3,
       }),
-    []
+    [allIngredients]
   );
 
   const searchResults = useMemo(() => {
@@ -126,7 +128,7 @@ function CalculatorContent() {
       )
     );
   };
-// Calculations
+
   const totals = useMemo(() => {
     return selectedIngredients.reduce(
       (acc, item) => {
@@ -182,6 +184,13 @@ function CalculatorContent() {
     setSavedMenus(updatedMenus);
     localStorage.setItem("gigizi_menus", JSON.stringify(updatedMenus));
     
+    saveDailyLog({
+        totalCalories: Math.round(totals.calories),
+        protein: Math.round(totals.protein),
+        fat: Math.round(totals.fat),
+        carbs: Math.round(totals.carbs)
+    });
+    
     setIsSaving(false);
     setMenuName("");
     setShowToast("Menu berhasil disimpan!");
@@ -207,11 +216,12 @@ function CalculatorContent() {
     setShowToast("Sedang menyiapkan gambar...");
     
     try {
-        // Ensure the element is visible in the DOM, just off-screen
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         const canvas = await html2canvas(shareCardRef.current, {
             backgroundColor: "#FAF6EF",
             scale: 2,
-            logging: true, // Set to true to see if it's failing
+            logging: true,
             useCORS: true,
             allowTaint: false,
         });
@@ -387,6 +397,11 @@ function CalculatorContent() {
                               gr
                             </div>
                           </div>
+                          <div className="flex gap-1 mt-1">
+                            <button onClick={() => updateWeight(item.id, 50)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">0.5x</button>
+                            <button onClick={() => updateWeight(item.id, 100)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">1x</button>
+                            <button onClick={() => updateWeight(item.id, 200)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">2x</button>
+                          </div>
                         </div>
                         <div className="flex flex-col items-end min-w-[80px]">
                           <div className="text-xl font-bold text-text-dark">
@@ -415,6 +430,8 @@ function CalculatorContent() {
             totals={totals}
             onAdd={addIngredient}
           />
+
+          <WeeklyTrends />
 
           {savedMenus.length > 0 && (
             <div className="pt-8 border-t border-text-dark/10">
@@ -646,8 +663,8 @@ function CalculatorContent() {
           </div>
         )}
       </AnimatePresence>
-
-      <div className="fixed left-[-9999px] top-[-9999px]">
+      {/* Hidden Share Card for Export */}
+      <div className="absolute top-0 left-0 -z-50 opacity-100 pointer-events-none" style={{ transform: 'translateX(-9999px)' }}>
         <div
           ref={shareCardRef}
           className="w-[600px] bg-background-warm p-12 flex flex-col gap-8 rounded-[3rem]"
