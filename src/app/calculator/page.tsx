@@ -215,6 +215,11 @@ function CalculatorContent() {
     
     setShowToast("Sedang menyiapkan gambar...");
     
+    // Store original background
+    const originalBg = shareCardRef.current.style.backgroundImage;
+    shareCardRef.current.style.backgroundImage = "none";
+    shareCardRef.current.style.backgroundColor = "#FAF6EF";
+    
     try {
         await new Promise(resolve => setTimeout(resolve, 500));
         
@@ -223,7 +228,7 @@ function CalculatorContent() {
             scale: 2,
             logging: true,
             useCORS: true,
-            allowTaint: false,
+            allowTaint: true,
         });
         
         const image = canvas.toDataURL("image/png");
@@ -236,6 +241,9 @@ function CalculatorContent() {
     } catch (error) {
         console.error("Export failed", error);
         setShowToast("Gagal mengunduh gambar.");
+    } finally {
+        // Restore background
+        shareCardRef.current.style.backgroundImage = originalBg;
     }
     
     setTimeout(() => setShowToast(null), 3000);
@@ -664,7 +672,7 @@ function CalculatorContent() {
         )}
       </AnimatePresence>
       {/* Hidden Share Card for Export */}
-      <div className="absolute top-0 left-0 -z-50 opacity-0 pointer-events-none w-[600px] h-[800px] overflow-hidden">
+      <div className="fixed left-[-9999px] top-[-9999px] opacity-100 w-[600px] h-[800px] overflow-hidden">
         <div
           ref={shareCardRef}
           className="w-[600px] bg-background-warm p-12 flex flex-col gap-8 rounded-[3rem]"
