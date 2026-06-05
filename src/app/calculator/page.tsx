@@ -218,7 +218,7 @@ function CalculatorContent() {
     try {
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        // Clone the element to avoid modifying the UI
+        // Clone the element
         const clone = shareCardRef.current.cloneNode(true) as HTMLElement;
         document.body.appendChild(clone);
         
@@ -227,6 +227,13 @@ function CalculatorContent() {
         clone.style.position = 'absolute';
         clone.style.top = '0';
         clone.style.left = '-9999px';
+        
+        // Explicitly remove background image to prevent CORS error
+        clone.style.backgroundImage = 'none';
+        clone.style.backgroundColor = '#FAF6EF';
+        
+        // Force hex colors to avoid oklab issues
+        clone.style.color = '#2C1810';
         
         const canvas = await html2canvas(clone, {
             backgroundColor: "#FAF6EF",
