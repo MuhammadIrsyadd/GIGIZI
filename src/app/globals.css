@@ -32,3 +32,12 @@ h1, h2, h3, h4, h5, h6 {
 .label-text {
   font-family: var(--font-space-mono);
 }
+
+.export-mode {
+  --color-primary: #3D6B4F !important;
+  --color-secondary: #F5A623 !important;
+  --color-accent: #E8503A !important;
+  --color-text-dark: #2C1810 !important;
+  color: #2C1810 !important;
+  background-color: #FAF6EF !important;
+}

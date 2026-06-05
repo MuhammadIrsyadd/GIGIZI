@@ -221,20 +221,12 @@ function CalculatorContent() {
         // Clone the element to avoid modifying the UI
         const clone = shareCardRef.current.cloneNode(true) as HTMLElement;
         document.body.appendChild(clone);
+        
+        // Apply export-mode class and position
+        clone.classList.add('export-mode');
         clone.style.position = 'absolute';
-        clone.style.top = '-9999px';
-        
-        // Recursive function to force Hex colors on all elements
-        const forceHex = (el: HTMLElement) => {
-            const style = window.getComputedStyle(el);
-            const props = ['color', 'backgroundColor', 'borderColor', 'fill', 'stroke'];
-            props.forEach(p => {
-                el.style[p as any] = style[p as any];
-            });
-            Array.from(el.children).forEach(child => forceHex(child as HTMLElement));
-        };
-        
-        forceHex(clone);
+        clone.style.top = '0';
+        clone.style.left = '-9999px';
         
         const canvas = await html2canvas(clone, {
             backgroundColor: "#FAF6EF",
