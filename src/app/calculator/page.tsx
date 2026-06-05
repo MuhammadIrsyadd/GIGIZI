@@ -218,11 +218,13 @@ function CalculatorContent() {
     try {
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        // Forcefully remove background image by applying a class or style
         const element = shareCardRef.current;
-        const originalStyle = element.getAttribute('style');
-        element.style.backgroundImage = 'none';
+        const originalStyle = element.style.cssText;
+        
+        // Force hex colors to avoid oklab
+        element.style.color = '#2C1810'; 
         element.style.backgroundColor = '#FAF6EF';
+        element.style.backgroundImage = 'none';
         
         const canvas = await html2canvas(element, {
             backgroundColor: "#FAF6EF",
@@ -232,12 +234,7 @@ function CalculatorContent() {
             allowTaint: true,
         });
         
-        // Restore original style
-        if (originalStyle) {
-            element.setAttribute('style', originalStyle);
-        } else {
-            element.removeAttribute('style');
-        }
+        element.style.cssText = originalStyle;
         
         const image = canvas.toDataURL("image/png");
         const link = document.createElement("a");
