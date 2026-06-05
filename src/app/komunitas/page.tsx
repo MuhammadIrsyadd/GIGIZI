@@ -87,11 +87,14 @@ export default function KomunitasPage() {
               <div className="space-y-3 mb-8">
                 {menu.items.slice(0, 3).map((item) => {
                   const ing = ingredients.find((i) => i.id === item.ingredientId);
+                  if (!ing) {
+                    console.error(`[GIGIZI DEBUG] Ingredient not found: ${item.ingredientId}. Available IDs:`, ingredients.map(i => i.id));
+                  }
                   return (
                     <div key={item.ingredientId} className="flex justify-between items-center text-sm">
                       <div className="flex items-center gap-2">
-                        <span>{ing?.icon}</span>
-                        <span className="text-foreground/80">{ing?.name}</span>
+                        <span>{ing?.icon || "❓"}</span>
+                        <span className="text-foreground/80">{ing?.name || "Bahan tidak ditemukan"}</span>
                       </div>
                       <span className="font-space-mono text-foreground/40">{item.weight}g</span>
                     </div>
