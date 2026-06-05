@@ -30,6 +30,7 @@ import { twMerge } from "tailwind-merge";
 import { useSearchParams, useRouter } from "next/navigation";
 import { RecommendationEngine } from "@/components/RecommendationEngine";
 import { WeeklyTrends } from "@/components/WeeklyTrends";
+import { ExportCard } from "@/components/ExportCard";
 import { saveDailyLog } from "@/data/mockCommunity";
 import { useIngredients } from "@/hooks/useIngredients";
 
