@@ -5,6 +5,11 @@ import { ingredients } from "@/data/ingredients";
 import { Heart, User, Share2, ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { Ingredient } from "@/data/ingredients";
+
+interface SelectedIngredient extends Ingredient {
+    weight: number;
+}
 
 export default function KomunitasPage() {
   const router = useRouter();
@@ -12,10 +17,13 @@ export default function KomunitasPage() {
   const handleCopyMenu = (menuId: string) => {
     const menu = mockCommunityMenus.find((m) => m.id === menuId);
     if (menu) {
-      const itemsToLoad = menu.items.map((item) => {
-        const ingredient = ingredients.find((i) => i.id === item.ingredientId);
-        return { ...ingredient, weight: item.weight };
-      });
+      const itemsToLoad = menu.items
+        .map((item) => {
+          const ingredient = ingredients.find((i) => i.id === item.ingredientId);
+          if (!ingredient) return null;
+          return { ...ingredient, weight: item.weight };
+        })
+        .filter((item): item is SelectedIngredient => item !== null);
       
       // Save to a temporary load key in localStorage
       localStorage.setItem("gigizi_temp_load", JSON.stringify(itemsToLoad));
