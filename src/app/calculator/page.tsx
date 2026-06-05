@@ -206,19 +206,39 @@ function CalculatorContent() {
     
     setShowToast("Sedang menyiapkan gambar...");
     
+    // Slight delay to ensure render
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
     const element = shareCardRef.current;
-    const canvas = await html2canvas(element, {
-      backgroundColor: "#FAF6EF",
-      scale: 2,
-    });
     
-    const image = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = `GIGIZI-${menuName || "Nutrisi"}.png`;
-    link.click();
+    // Clone element to remove background image for cleaner export without CORS issues
+    const clone = element.cloneNode(true) as HTMLElement;
+    clone.style.backgroundImage = "none";
+    clone.style.backgroundColor = "#FAF6EF";
+    document.body.appendChild(clone);
     
-    setShowToast("Gambar berhasil diunduh!");
+    try {
+        const canvas = await html2canvas(clone, {
+            backgroundColor: "#FAF6EF",
+            scale: 2,
+            logging: false,
+            useCORS: true
+        });
+        
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = `GIGIZI-${menuName || "Nutrisi"}.png`;
+        link.click();
+        
+        setShowToast("Gambar berhasil diunduh!");
+    } catch (error) {
+        console.error("Export failed", error);
+        setShowToast("Gagal mengunduh gambar.");
+    } finally {
+        document.body.removeChild(clone);
+    }
+    
     setTimeout(() => setShowToast(null), 3000);
   };
 
