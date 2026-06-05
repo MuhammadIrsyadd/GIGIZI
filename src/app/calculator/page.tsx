@@ -206,23 +206,14 @@ function CalculatorContent() {
     
     setShowToast("Sedang menyiapkan gambar...");
     
-    // Slight delay to ensure render
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const element = shareCardRef.current;
-    
-    // Clone element to remove background image for cleaner export without CORS issues
-    const clone = element.cloneNode(true) as HTMLElement;
-    clone.style.backgroundImage = "none";
-    clone.style.backgroundColor = "#FAF6EF";
-    document.body.appendChild(clone);
-    
     try {
-        const canvas = await html2canvas(clone, {
+        // Ensure the element is visible in the DOM, just off-screen
+        const canvas = await html2canvas(shareCardRef.current, {
             backgroundColor: "#FAF6EF",
             scale: 2,
-            logging: false,
-            useCORS: true
+            logging: true, // Set to true to see if it's failing
+            useCORS: true,
+            allowTaint: false,
         });
         
         const image = canvas.toDataURL("image/png");
@@ -235,8 +226,6 @@ function CalculatorContent() {
     } catch (error) {
         console.error("Export failed", error);
         setShowToast("Gagal mengunduh gambar.");
-    } finally {
-        document.body.removeChild(clone);
     }
     
     setTimeout(() => setShowToast(null), 3000);
