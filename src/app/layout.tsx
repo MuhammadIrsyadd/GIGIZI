@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   manifest: "/manifest.json",
+  verification: {
+    google: google-site-verification: googlea1d57ae851c0a289.html,
+  },
 };
 
 export const viewport: Viewport = {
