@@ -215,21 +215,29 @@ function CalculatorContent() {
     
     setShowToast("Sedang menyiapkan gambar...");
     
-    // Store original background
-    const originalBg = shareCardRef.current.style.backgroundImage;
-    shareCardRef.current.style.backgroundImage = "none";
-    shareCardRef.current.style.backgroundColor = "#FAF6EF";
-    
     try {
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        const canvas = await html2canvas(shareCardRef.current, {
+        // Forcefully remove background image by applying a class or style
+        const element = shareCardRef.current;
+        const originalStyle = element.getAttribute('style');
+        element.style.backgroundImage = 'none';
+        element.style.backgroundColor = '#FAF6EF';
+        
+        const canvas = await html2canvas(element, {
             backgroundColor: "#FAF6EF",
             scale: 2,
-            logging: true,
+            logging: false,
             useCORS: true,
             allowTaint: true,
         });
+        
+        // Restore original style
+        if (originalStyle) {
+            element.setAttribute('style', originalStyle);
+        } else {
+            element.removeAttribute('style');
+        }
         
         const image = canvas.toDataURL("image/png");
         const link = document.createElement("a");
@@ -241,9 +249,6 @@ function CalculatorContent() {
     } catch (error) {
         console.error("Export failed", error);
         setShowToast("Gagal mengunduh gambar.");
-    } finally {
-        // Restore background
-        shareCardRef.current.style.backgroundImage = originalBg;
     }
     
     setTimeout(() => setShowToast(null), 3000);
