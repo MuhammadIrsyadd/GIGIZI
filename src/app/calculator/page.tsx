@@ -218,15 +218,25 @@ function CalculatorContent() {
     try {
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        const element = shareCardRef.current;
-        const originalStyle = element.style.cssText;
+        // Clone the element to avoid modifying the UI
+        const clone = shareCardRef.current.cloneNode(true) as HTMLElement;
+        document.body.appendChild(clone);
+        clone.style.position = 'absolute';
+        clone.style.top = '-9999px';
         
-        // Force hex colors to avoid oklab
-        element.style.color = '#2C1810'; 
-        element.style.backgroundColor = '#FAF6EF';
-        element.style.backgroundImage = 'none';
+        // Recursive function to force Hex colors on all elements
+        const forceHex = (el: HTMLElement) => {
+            const style = window.getComputedStyle(el);
+            const props = ['color', 'backgroundColor', 'borderColor', 'fill', 'stroke'];
+            props.forEach(p => {
+                el.style[p as any] = style[p as any];
+            });
+            Array.from(el.children).forEach(child => forceHex(child as HTMLElement));
+        };
         
-        const canvas = await html2canvas(element, {
+        forceHex(clone);
+        
+        const canvas = await html2canvas(clone, {
             backgroundColor: "#FAF6EF",
             scale: 2,
             logging: false,
@@ -234,7 +244,7 @@ function CalculatorContent() {
             allowTaint: true,
         });
         
-        element.style.cssText = originalStyle;
+        document.body.removeChild(clone);
         
         const image = canvas.toDataURL("image/png");
         const link = document.createElement("a");
