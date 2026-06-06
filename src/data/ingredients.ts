@@ -56,6 +56,7 @@ export const ingredients: Ingredient[] = [
   { id: "oseng-kacang-panjang", name: "Oseng Kacang Panjang", calories: 65, protein: 3, fat: 4, carbs: 6, fiber: 2.5, category: "Sayuran", icon: "🌱", price: 4000 },
   { id: "capcay-warteg", name: "Capcay Warteg", calories: 85, protein: 4, fat: 5, carbs: 8, fiber: 2, category: "Sayuran", icon: "🥗", price: 5000 },
   { id: "terong-balado", name: "Terong Balado", calories: 132, protein: 1.5, fat: 11, carbs: 8, fiber: 2.5, category: "Sayuran", icon: "🍆", price: 4000 },
+  { id: "sawi-hijau", name: "Sawi Hijau Tumis", calories: 35, protein: 2.3, fat: 2, carbs: 3.5, fiber: 1.8, category: "Sayuran", icon: "🥬", price: 3000 },
   { id: "brokoli", name: "Brokoli Rebus", calories: 34, protein: 2.8, fat: 0.4, carbs: 6.6, fiber: 2.6, category: "Sayuran", icon: "🥦", price: 4000 },
   { id: "wortel", name: "Wortel Rebus", calories: 41, protein: 0.9, fat: 0.2, carbs: 9.6, fiber: 2.8, category: "Sayuran", icon: "🥕", price: 2000 },
   { id: "jengkol-balado", name: "Jengkol Balado", calories: 155, protein: 4, fat: 7, carbs: 20, fiber: 2, category: "Sayuran", icon: "🫘", price: 5000 },

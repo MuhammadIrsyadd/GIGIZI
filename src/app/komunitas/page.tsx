@@ -87,9 +87,6 @@ export default function KomunitasPage() {
               <div className="space-y-3 mb-8">
                 {menu.items.slice(0, 3).map((item) => {
                   const ing = ingredients.find((i) => i.id === item.ingredientId);
-                  if (!ing) {
-                    console.error(`[GIGIZI DEBUG] Ingredient not found: ${item.ingredientId}. Available IDs:`, ingredients.map(i => i.id));
-                  }
                   return (
                     <div key={item.ingredientId} className="flex justify-between items-center text-sm">
                       <div className="flex items-center gap-2">
