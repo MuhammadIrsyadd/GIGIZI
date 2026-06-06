@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Leaf, Thermometer, ShieldAlert, Zap, Moon, Coffee, HeartPulse, Search } from "lucide-react";
+import { Leaf, Thermometer, ShieldAlert, Zap, Moon, Coffee, HeartPulse, Search, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Remedy {
