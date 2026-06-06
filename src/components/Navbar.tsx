@@ -33,6 +33,8 @@ export const Navbar = () => {
     { name: "Kalkulator", href: "/calculator" },
     { name: "Kebutuhan Harian", href: "/kebutuhan-harian" },
     { name: "Database", href: "/database" },
+    { name: "Battle Gizi", href: "/battle-gizi" },
+    { name: "Apotek Alami", href: "/apotek-alami" },
     { name: "Komunitas", href: "/komunitas" },
     { name: "Tanya GIZI", href: "/tanya-gizi" },
     { name: "Tentang Kami", href: "/about" },
@@ -50,22 +52,22 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex gap-8 items-center">
+          <div className="hidden lg:flex gap-6 items-center">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-text-dark/70 hover:text-primary transition-colors font-bold text-sm uppercase tracking-widest"
+                className="text-text-dark/70 hover:text-primary transition-colors font-bold text-[10px] uppercase tracking-widest"
               >
                 {link.name}
               </Link>
             ))}
             
             {remainingCal !== null && (
-              <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
-                <Flame className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-xs font-bold text-primary uppercase font-space-mono">
-                  Sisa: {remainingCal} kkal
+              <div className="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+                <Flame className="w-3 h-3 text-primary animate-pulse" />
+                <span className="text-[10px] font-bold text-primary uppercase font-space-mono">
+                  Sisa: {remainingCal}
                 </span>
               </div>
             )}
@@ -93,7 +95,7 @@ export const Navbar = () => {
 
       {/* Mobile Nav Dropdown */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-background-warm border-b border-text-dark/10 p-4 space-y-4">
+        <div className="lg:hidden bg-background-warm border-b border-text-dark/10 p-4 space-y-4 max-h-[60vh] overflow-y-auto">
           {navLinks.map((link) => (
             <Link
               key={link.href}
