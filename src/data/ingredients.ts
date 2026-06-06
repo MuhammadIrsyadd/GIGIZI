@@ -78,4 +78,16 @@ export const ingredients: Ingredient[] = [
   { id: "sambal-terasi", name: "Sambal Terasi (1 sdm)", calories: 45, protein: 1, fat: 3.5, carbs: 3, fiber: 1, category: "Bumbu", icon: "🌶️", price: 1000 },
   { id: "kerupuk-kaleng", name: "Kerupuk Putih (1 buah)", calories: 100, protein: 1, fat: 6, carbs: 11, fiber: 0, category: "Masakan", icon: "🍪", price: 1000 },
   { id: "minyak-goreng", name: "Minyak Goreng (1 sdm)", calories: 120, protein: 0, fat: 14, carbs: 0, fiber: 0, category: "Lemak & Minyak", icon: "💧", price: 500 },
+  
+  // --- ANAK KOS FAVORITES ---
+  { id: "ayam-geprek", name: "Ayam Geprek (1 porsi)", calories: 450, protein: 35, fat: 28, carbs: 12, fiber: 0, category: "Masakan", icon: "🍗", price: 15000 },
+  { id: "mentimun", name: "Mentimun Segar", calories: 15, protein: 0.7, fat: 0.1, carbs: 3.6, fiber: 0.5, category: "Sayuran", icon: "🥒", price: 1000 },
+  { id: "kuah-soto", name: "Kuah Soto Ayam", calories: 60, protein: 4, fat: 4, carbs: 2, fiber: 0, category: "Masakan", icon: "🥣", price: 3000 },
+  { id: "ayam-suwir", name: "Ayam Suwir (Soto)", calories: 165, protein: 31, fat: 3.6, carbs: 0, fiber: 0, category: "Protein Hewani", icon: "🍗", price: 5000 },
+  { id: "soun", name: "Soun (Bihun)", calories: 175, protein: 0.2, fat: 0.1, carbs: 43, fiber: 0.1, category: "Karbohidrat", icon: "🍜", price: 2000 },
+  { id: "bubur-ayam", name: "Bubur Ayam (Polos)", calories: 155, protein: 2, fat: 0.3, carbs: 36, fiber: 0.4, category: "Karbohidrat", icon: "🥣", price: 5000 },
+  { id: "cakwe", name: "Cakwe (1 buah)", calories: 120, protein: 2, fat: 6, carbs: 15, fiber: 0.5, category: "Protein Nabati", icon: "🥖", price: 1500 },
+  { id: "kerupuk-udang", name: "Kerupuk Udang", calories: 150, protein: 1, fat: 9, carbs: 16, fiber: 0, category: "Masakan", icon: "🍪", price: 2000 },
+  { id: "sambal-bawang", name: "Sambal Bawang (Geprek)", calories: 60, protein: 0.5, fat: 6, carbs: 1, fiber: 0.5, category: "Bumbu", icon: "🌶️", price: 1000 },
+  { id: "nasi-kuning", name: "Nasi Kuning", calories: 150, protein: 3, fat: 4, carbs: 26, fiber: 0.5, category: "Karbohidrat", icon: "🍚", price: 5000 },
 ];
