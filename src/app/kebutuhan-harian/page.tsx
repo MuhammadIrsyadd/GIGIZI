@@ -284,24 +284,36 @@ export default function KebutuhanHarianPage() {
             </div>
           </div>
 
-          <div className="bg-text-dark text-background-warm p-10 rounded-[3rem] shadow-xl overflow-hidden relative group">
+          {/* Resep Sehat Irit Section */}
+          <div className="bg-primary/5 border-2 border-primary/10 p-10 rounded-[3rem] shadow-sm overflow-hidden relative group">
             <div className="relative z-10">
-                <h3 className="text-2xl font-playfair font-bold mb-6 flex items-center gap-3">
-                <Flame className="w-6 h-6 text-secondary" />
-                Resep Sehat Irit
+                <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
+                <Flame className="w-6 h-6 text-primary" />
+                Resep Sehat Irit Irsyad
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="bg-white/10 p-6 rounded-2xl border border-white/5 hover:bg-white/20 transition-all">
-                        <h4 className="font-bold text-secondary mb-1 italic">Protein Booster 10rb</h4>
-                        <p className="text-xs opacity-70">Nasi (3k) + Tempe (2k) + Telur Rebus (3k) + Kangkung (2k). Murah, sehat, bertenaga!</p>
+                    <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm hover:shadow-md transition-all">
+                        <h4 className="font-bold text-primary mb-2 italic flex items-center gap-2">
+                            <Utensils className="w-4 h-4" />
+                            Protein Booster 10rb
+                        </h4>
+                        <p className="text-sm text-text-dark/70 leading-relaxed italic">
+                            Nasi (3k) + Tempe (2k) + Telur Rebus (3k) + Kangkung (2k). 
+                            <span className="block mt-2 font-bold text-text-dark/90 not-italic text-xs">Murah, sehat, bertenaga!</span>
+                        </p>
                     </div>
-                    <div className="bg-white/10 p-6 rounded-2xl border border-white/5 hover:bg-white/20 transition-all">
-                        <h4 className="font-bold text-secondary mb-1 italic">Veggies Party 8rb</h4>
-                        <p className="text-xs opacity-70">Sayur Lodeh (4k) + Tahu Goreng (2k) + Bakwan Jagung (2k). Serat tinggi untuk pencernaan lancar.</p>
+                    <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm hover:shadow-md transition-all">
+                        <h4 className="font-bold text-primary mb-2 italic flex items-center gap-2">
+                            <Utensils className="w-4 h-4" />
+                            Veggies Party 8rb
+                        </h4>
+                        <p className="text-sm text-text-dark/70 leading-relaxed italic">
+                            Sayur Lodeh (4k) + Tahu Goreng (2k) + Bakwan Jagung (2k). 
+                            <span className="block mt-2 font-bold text-text-dark/90 not-italic text-xs">Serat tinggi untuk pencernaan lancar.</span>
+                        </p>
                     </div>
                 </div>
             </div>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
           </div>
 
           <div className="flex justify-center">
