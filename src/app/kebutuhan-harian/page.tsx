@@ -6,8 +6,6 @@ import {
   Flame, 
   Utensils, 
   RefreshCcw, 
-  CheckCircle2, 
-  TrendingUp, 
   Activity,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,15 +29,7 @@ export default function KebutuhanHarianPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [intake, setIntake] = useState<number>(0);
   const [isAddingProfile, setIsAddingProfile] = useState(false);
-  
-  // Weekly Challenge state
-  const [challenges, setChallenges] = useState<{id: string, title: string, completed: boolean}[]>([
-    { id: "c1", title: "7 Hari Tanpa Gorengan", completed: false },
-    { id: "c2", title: "Makan Sayur di Setiap Piring", completed: false },
-    { id: "c3", title: "Minum 8 Gelas Air Putih", completed: false },
-  ]);
 
-  // Form State
   const [form, setForm] = useState<UserProfile>({
     gender: "male",
     age: 21,
@@ -48,12 +38,10 @@ export default function KebutuhanHarianPage() {
     activity: 1.2,
   });
 
-  // Load from LocalStorage
   useEffect(() => {
     const savedProfile = localStorage.getItem("gigizi_profile");
     const savedIntake = localStorage.getItem("gigizi_daily_intake");
     const savedDate = localStorage.getItem("gigizi_intake_date");
-    const savedChallenges = localStorage.getItem("gigizi_challenges");
     
     const today = new Date().toLocaleDateString();
 
@@ -67,19 +55,8 @@ export default function KebutuhanHarianPage() {
       localStorage.setItem("gigizi_intake_date", today);
       localStorage.setItem("gigizi_daily_intake", "0");
     }
-
-    if (savedChallenges) {
-        setChallenges(JSON.parse(savedChallenges));
-    }
   }, []);
 
-  const toggleChallenge = (id: string) => {
-    const updated = challenges.map(c => c.id === id ? { ...c, completed: !c.completed } : c);
-    setChallenges(updated);
-    localStorage.setItem("gigizi_challenges", JSON.stringify(updated));
-  };
-
-  // BMR Calculation (Mifflin-St Jeor Equation)
   const calculateTargets = useMemo(() => {
     if (!profile) return { min: 1800, max: 2200 };
     
@@ -174,7 +151,6 @@ export default function KebutuhanHarianPage() {
         </motion.div>
       ) : (
         <div className="space-y-12">
-          {/* Main Status & Avatar */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             <div className="bg-primary text-background-warm p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col justify-center text-center md:text-left">
               <h4 className="uppercase text-[10px] font-space-mono tracking-[0.4em] opacity-70 mb-2">Asupan Hari Ini</h4>
@@ -195,7 +171,6 @@ export default function KebutuhanHarianPage() {
             />
           </div>
 
-          {/* Status Message */}
           <div className={cn(
             "p-10 rounded-[3rem] border-2 flex flex-col justify-center transition-all",
             status.type === "ideal" ? "bg-primary/5 border-primary/20 text-primary" : 
@@ -213,7 +188,11 @@ export default function KebutuhanHarianPage() {
             </p>
           </div>
 
-          {/* Quick Input Panel */}
+          <div className="bg-secondary/10 p-10 rounded-[3rem] border border-secondary/20">
+            <h3 className="text-xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-2">
+                <Utensils className="w-5 h-5 text-secondary" />
+                Log Makanan Cepat
+            </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[100, 250, 500, 750].map(val => (
                     <button 
@@ -258,7 +237,6 @@ export default function KebutuhanHarianPage() {
             </div>
           </div>
 
-          {/* Resep Sehat Irit Section */}
           <div className="bg-primary/5 border-2 border-primary/10 p-10 rounded-[3rem] shadow-sm overflow-hidden relative group">
             <div className="relative z-10">
                 <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
@@ -301,7 +279,6 @@ export default function KebutuhanHarianPage() {
         </div>
       )}
 
-      {/* Profile Modal */}
       <AnimatePresence>
         {isAddingProfile && (
           <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
