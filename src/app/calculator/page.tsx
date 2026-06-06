@@ -429,8 +429,6 @@ function CalculatorContent() {
             onAdd={addIngredient}
           />
 
-          <WeeklyTrends />
-
           {savedMenus.length > 0 && (
             <div className="pt-8 border-t border-text-dark/10">
               <h3 className="text-xl font-playfair font-bold text-text-dark mb-4">
