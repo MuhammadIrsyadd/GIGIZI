@@ -32,25 +32,26 @@ interface UserProfile {
   activity: number;
 }
 
+import { BodyAvatar } from "@/components/BodyAvatar";
+
 export default function KebutuhanHarianPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [intake, setIntake] = useState<number>(0);
   const [isCalculated, setIsAddingProfile] = useState(false);
-
-  // Form State
-  const [form, setForm] = useState<UserProfile>({
-    gender: "male",
-    age: 21,
-    weight: 65,
-    height: 170,
-    activity: 1.2,
-  });
+  
+  // Weekly Challenge state
+  const [challenges, setChallenges] = useState<{id: string, title: string, completed: boolean}[]>([
+    { id: "c1", title: "7 Hari Tanpa Gorengan", completed: false },
+    { id: "c2", title: "Makan Sayur di Setiap Piring", completed: false },
+    { id: "c3", title: "Minum 8 Gelas Air Putih", completed: false },
+  ]);
 
   // Load from LocalStorage
   useEffect(() => {
     const savedProfile = localStorage.getItem("gigizi_profile");
     const savedIntake = localStorage.getItem("gigizi_daily_intake");
     const savedDate = localStorage.getItem("gigizi_intake_date");
+    const savedChallenges = localStorage.getItem("gigizi_challenges");
     
     const today = new Date().toLocaleDateString();
 
@@ -64,7 +65,18 @@ export default function KebutuhanHarianPage() {
       localStorage.setItem("gigizi_intake_date", today);
       localStorage.setItem("gigizi_daily_intake", "0");
     }
+
+    if (savedChallenges) {
+        setChallenges(JSON.parse(savedChallenges));
+    }
   }, []);
+
+  const toggleChallenge = (id: string) => {
+    const updated = challenges.map(c => c.id === id ? { ...c, completed: !c.completed } : c);
+    setChallenges(updated);
+    localStorage.setItem("gigizi_challenges", JSON.stringify(updated));
+  };
+
 
   // BMR Calculation (Mifflin-St Jeor Equation)
   const calculateTargets = useMemo(() => {
@@ -144,6 +156,7 @@ export default function KebutuhanHarianPage() {
       </header>
 
       {!profile ? (
+        // ... (profile setup UI remains the same)
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,74 +177,80 @@ export default function KebutuhanHarianPage() {
           </button>
         </motion.div>
       ) : (
-        <div className="space-y-8">
-          {/* Main Stats Card */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-primary text-background-warm p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col justify-center">
+        <div className="space-y-12">
+          {/* Avatar & Stats Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            <BodyAvatar 
+                intake={intake} 
+                targets={calculateTargets} 
+                protein={0} // We can enhance this later to track macros too
+                fiber={0}
+            />
+            
+            <div className="bg-primary text-background-warm p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col justify-center text-center md:text-left">
               <h4 className="uppercase text-[10px] font-space-mono tracking-[0.4em] opacity-70 mb-2">Asupan Hari Ini</h4>
               <div className="text-7xl font-playfair font-bold mb-2">{intake} <span className="text-xl font-space-mono opacity-50 uppercase">kkal</span></div>
-              <div className="h-1 w-20 bg-secondary mb-6 rounded-full" />
-              <div className="flex items-center gap-2 text-sm font-bold opacity-90">
+              <div className="h-1 w-20 bg-secondary mb-6 rounded-full mx-auto md:mx-0" />
+              <div className="flex items-center gap-2 text-sm font-bold opacity-90 justify-center md:justify-start">
                 <Activity className="w-4 h-4" />
                 Target: {calculateTargets.min} - {calculateTargets.max} kkal
               </div>
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
             </div>
+          </div>
 
-            <div className={cn(
-              "p-10 rounded-[3rem] border-2 flex flex-col justify-center transition-all",
-              status.type === "ideal" ? "bg-primary/5 border-primary/20" : 
-              status.type === "high" ? "bg-accent/5 border-accent/20" : 
-              "bg-secondary/5 border-secondary/20"
-            )}>
-              <div className="flex items-center gap-4 mb-4">
-                <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-white", status.color)}>
-                  {status.icon}
-                </div>
-                <div>
-                  <h4 className="uppercase text-[10px] font-space-mono tracking-[0.3em] text-text-dark/40">Status Gizi</h4>
-                  <div className={cn("text-2xl font-bold font-playfair", status.color)}>{status.label}</div>
-                </div>
-              </div>
-              <p className="text-text-dark/70 italic text-sm leading-relaxed">
-                {status.advice}
-              </p>
-              <button 
-                onClick={() => { setIntake(0); localStorage.setItem("gigizi_daily_intake", "0"); }}
-                className="mt-6 text-[10px] uppercase font-bold text-text-dark/30 hover:text-text-dark transition-colors flex items-center gap-1"
-              >
-                <RefreshCcw className="w-3 h-3" /> Reset Data Hari Ini
-              </button>
+          {/* 7-Day Challenges Section */}
+          <div className="bg-white p-10 rounded-[3rem] border border-text-dark/5 shadow-sm">
+            <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
+              <TrendingUp className="w-6 h-6 text-primary" />
+              Tantangan 7 Hari
+            </h3>
+            <div className="space-y-4">
+              {challenges.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => toggleChallenge(c.id)}
+                  className={cn(
+                    "w-full p-6 rounded-2xl border flex items-center justify-between transition-all",
+                    c.completed ? "bg-primary/5 border-primary/20 text-primary" : "bg-background-warm border-text-dark/5 text-text-dark/60 hover:border-primary/20"
+                  )}
+                >
+                  <span className={cn("font-bold text-sm italic", c.completed && "line-through opacity-50")}>
+                    {c.title}
+                  </span>
+                  {c.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 border-2 border-current rounded-full opacity-20" />}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Quick Input Panel */}
-          <div className="bg-white p-8 rounded-[3rem] border border-text-dark/5 shadow-sm">
+          <div className="bg-secondary/10 p-10 rounded-[3rem] border border-secondary/20">
             <h3 className="text-xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-2">
-                <Utensils className="w-5 h-5 text-primary" />
-                Input Kalori Cepat
+                <Utensils className="w-5 h-5 text-secondary" />
+                Log Makanan Cepat
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[100, 250, 500, 750].map(val => (
                     <button 
                         key={val}
                         onClick={() => handleAddIntake(val)}
-                        className="p-6 bg-background-warm rounded-[2rem] border border-text-dark/5 hover:border-primary hover:shadow-md transition-all group"
+                        className="p-6 bg-white rounded-2xl border border-secondary/10 hover:shadow-md transition-all group"
                     >
                         <div className="text-[10px] font-space-mono text-text-dark/40 mb-1">TAMBAH</div>
-                        <div className="text-2xl font-bold text-text-dark group-hover:text-primary">+{val}</div>
+                        <div className="text-2xl font-bold text-text-dark group-hover:text-secondary">+{val}</div>
                     </button>
                 ))}
             </div>
             
             <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center">
-                <p className="text-xs text-text-dark/40 italic">Atau masukkan angka spesifik:</p>
-                <div className="flex-grow flex gap-2">
+                <p className="text-xs text-text-dark/40 italic font-medium">Berapa kalori barusan?</p>
+                <div className="flex-grow flex gap-2 w-full">
                     <input 
                         type="number" 
                         id="custom-intake"
                         placeholder="0"
-                        className="bg-background-warm border border-text-dark/5 px-6 py-3 rounded-2xl focus:outline-none focus:border-primary text-center font-bold w-full"
+                        className="bg-white border border-secondary/10 px-6 py-3 rounded-2xl focus:outline-none focus:border-secondary text-center font-bold w-full"
                     />
                     <button 
                         onClick={() => {
@@ -239,12 +258,41 @@ export default function KebutuhanHarianPage() {
                             if (el.value) handleAddIntake(Number(el.value));
                             el.value = '';
                         }}
-                        className="px-6 py-3 bg-primary text-background-warm rounded-2xl font-bold hover:bg-primary/90 transition-all"
+                        className="px-8 py-3 bg-secondary text-text-dark rounded-2xl font-bold hover:bg-secondary/90 transition-all"
                     >
                         Simpan
                     </button>
                 </div>
             </div>
+            <div className="mt-6 flex justify-center">
+                <button 
+                    onClick={() => { setIntake(0); localStorage.setItem("gigizi_daily_intake", "0"); }}
+                    className="text-[10px] uppercase font-bold text-text-dark/30 hover:text-accent transition-colors flex items-center gap-1"
+                >
+                    <RefreshCcw className="w-3 h-3" /> Reset Hari Ini
+                </button>
+            </div>
+          </div>
+
+          {/* Resep Sehat Irit Section */}
+          <div className="bg-text-dark text-background-warm p-10 rounded-[3rem] shadow-xl overflow-hidden relative group">
+            <div className="relative z-10">
+                <h3 className="text-2xl font-playfair font-bold mb-6 flex items-center gap-3">
+                <Flame className="w-6 h-6 text-secondary" />
+                Resep Sehat Irit Irsyad
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="bg-white/10 p-6 rounded-2xl border border-white/5 hover:bg-white/20 transition-all">
+                        <h4 className="font-bold text-secondary mb-1 italic">Protein Booster 10rb</h4>
+                        <p className="text-xs opacity-70">Nasi (3k) + Tempe (2k) + Telur Rebus (3k) + Kangkung (2k). Murah, sehat, bertenaga!</p>
+                    </div>
+                    <div className="bg-white/10 p-6 rounded-2xl border border-white/5 hover:bg-white/20 transition-all">
+                        <h4 className="font-bold text-secondary mb-1 italic">Veggies Party 8rb</h4>
+                        <p className="text-xs opacity-70">Sayur Lodeh (4k) + Tahu Goreng (2k) + Bakwan Jagung (2k). Serat tinggi untuk pencernaan lancar.</p>
+                    </div>
+                </div>
+            </div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
           </div>
 
           <div className="flex justify-center">
@@ -252,10 +300,12 @@ export default function KebutuhanHarianPage() {
                 onClick={() => setIsAddingProfile(true)}
                 className="text-sm font-bold text-text-dark/40 hover:text-primary transition-all flex items-center gap-2"
             >
-                <Activity className="w-4 h-4" /> Edit Profil Fisik & Target
+                <Activity className="w-4 h-4" /> Edit Profil Fisik & Target Kalori
             </button>
           </div>
         </div>
+      ) : (
+        <p>Error in layout</p>
       )}
 
       {/* Profile Modal */}
