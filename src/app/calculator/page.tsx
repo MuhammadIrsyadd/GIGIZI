@@ -51,6 +51,13 @@ interface SavedMenu {
 
 const COLORS = ["#3D6B4F", "#F5A623", "#E8503A", "#2C1810"];
 
+const PORTION_GUIDE = [
+  { label: "1 Kepalan Tangan", weight: "± 150g Nasi/Karbo" },
+  { label: "1 Telapak Tangan", weight: "± 100g Protein" },
+  { label: "2 Genggam Penuh", weight: "± 100g Sayuran" },
+  { label: "1 Jempol", weight: "± 1 sdm Saus/Lemak" },
+];
+
 function CalculatorContent() {
   const { allIngredients } = useIngredients();
   const searchParams = useSearchParams();
