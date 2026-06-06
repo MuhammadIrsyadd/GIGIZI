@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Leaf, Zap, Heart } from "lucide-react";
+import { ArrowRight, Leaf, Zap, Heart, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/Logo";
 
 const NUTRITION_FACTS = [
