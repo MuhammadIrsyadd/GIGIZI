@@ -10,6 +10,7 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: "Kalkulator", href: "/calculator" },
+    { name: "Kebutuhan Harian", href: "/kebutuhan-harian" },
     { name: "Database", href: "/database" },
     { name: "Komunitas", href: "/komunitas" },
     { name: "Tanya GIZI", href: "/tanya-gizi" },
