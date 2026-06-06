@@ -249,9 +249,9 @@ function CalculatorContent() {
   const shareToWhatsApp = () => {
     if (selectedIngredients.length === 0) return;
     
-    let text = `*PIRING GIGIZI HARI INI* 🥗\n\n`;
+    let text = `*PIRING GIGIZI HARI INI*\n\n`;
     selectedIngredients.forEach(item => {
-        text += `• ${item.icon || '🍴'} ${item.name} (${item.weight}g)\n`;
+        text += `- ${item.name} (${item.weight}g)\n`;
     });
     text += `\n*TOTAL: ${Math.round(totals.calories)} kkal*\n`;
     text += `P: ${totals.protein.toFixed(1)}g | L: ${totals.fat.toFixed(1)}g | K: ${totals.carbs.toFixed(1)}g\n\n`;
