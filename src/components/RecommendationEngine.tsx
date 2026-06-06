@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Lightbulb, Plus, AlertTriangle, CheckCircle2, Sparkles, Utensils } from "lucide-react";
+import { Lightbulb, Plus, AlertTriangle, Sparkles, Utensils, Zap } from "lucide-react";
 import { Ingredient, ingredients } from "@/data/ingredients";
 
 interface RecommendationEngineProps {
@@ -42,7 +42,36 @@ export const RecommendationEngine = ({
       return list;
     }
 
-    // --- 2. Perfect Plate Check ---
+    // --- 2. Context-Aware Pairing Logic (Aggressive) ---
+    const hasRendang = currentItems.some(i => i.id === "rendang-sapi");
+    const hasFriedFood = currentItems.some(i => i.id === "ayam-goreng-warteg" || i.id === "tempe");
+    const hasVeggie = currentItems.some(i => ingredients.find(ing => ing.id === i.id)?.category === "Sayuran");
+    const hasHighFat = totals.fat > 30;
+
+    if (hasRendang && !hasVeggie) {
+        list.push({
+            type: "warning",
+            title: "Rendangmu Butuh Pasangan!",
+            desc: "Rendang sangat kaya lemak. Tambahkan Sayur Asem atau Tumis Kangkung agar piringmu lebih seimbang dan segar.",
+            ingredientId: "sayur-asem"
+        });
+    } else if (hasHighFat && !hasVeggie) {
+        list.push({
+            type: "neutral",
+            title: "Netralisir Lemak",
+            desc: "Piringmu cukup berminyak. Tambahkan sayuran hijau untuk membantu melancarkan pencernaan.",
+            ingredientId: "bayam"
+        });
+    } else if (hasFriedFood && !hasVeggie) {
+        list.push({
+            type: "neutral",
+            title: "Gorengan Saja Belum Cukup",
+            desc: "Gorengan memang nikmat, tapi tambahkan sayuran agar asupan seratmu tidak kosong sama sekali.",
+            ingredientId: "kangkung"
+        });
+    }
+
+    // --- 3. Perfect Plate Check ---
     const isPerfect = 
       totals.calories >= 450 && 
       totals.calories <= 750 && 
@@ -60,62 +89,49 @@ export const RecommendationEngine = ({
       } as FeedbackItem];
     }
 
-    // --- 3. Warnings (Excessive) ---
+    // --- 4. Warnings (Excessive) ---
     if (totals.calories > 900) {
         list.push({ type: "warning", title: "Porsi Sangat Besar", desc: "Satu porsi ini cukup berat. Jika ini makan siang, pastikan aktivitas fisikmu juga tinggi hari ini." });
     }
     if (totals.carbs > 120) {
         list.push({ type: "warning", title: "Waspada 'Food Coma'", desc: "Karbohidrat yang sangat tinggi bisa memicu lonjakan gula darah dan membuatmu sangat mengantuk." });
     }
-    if (totals.fat > 45) {
-        list.push({ type: "warning", title: "Lemak Sangat Tinggi", desc: "Hati-hati dengan asupan lemak jenuh. Coba kurangi gorengan untuk menjaga kesehatan pembuluh darah." });
-    }
 
-    // --- 4. Critical Suggestions (Missing) ---
+    // --- 5. Critical Suggestions (Missing) ---
     if (totals.protein < 10) {
       list.push({
         type: "info",
         title: "Butuh Pondasi Protein",
-        desc: "Protein sangat minim. Tambahkan lauk pauk seperti Tempe, Tahu, atau Ayam untuk membantu metabolisme tubuh.",
+        desc: "Protein membantu rasa kenyang lebih lama. Coba tambahkan Tempe atau Telur.",
         ingredientId: "tempe",
       });
     }
-    if (totals.fiber < 2) {
+    if (totals.fiber < 2 && !hasVeggie) {
       list.push({
         type: "info",
         title: "Mana Sayurnya?",
-        desc: "Serat hampir tidak ada. Tambahkan Sayur Asem atau Tumis Kangkung agar pencernaanmu tetap sehat.",
+        desc: "Serat sangat penting. Tambahkan Sayur Asem atau Tumis Kangkung agar pencernaanmu lancar.",
         ingredientId: "kangkung",
       });
     }
 
-    // --- 5. "Almost There" / Educational Tips (When it's neither perfect nor bad) ---
-    // If the list is still empty or has only 1 item, add proactive/educational tips
-    if (list.length < 2) {
-        // Tip about Fruit
+    // --- 6. Educational Tips ---
+    if (list.length < 3) {
         const hasFruit = currentItems.some(i => ingredients.find(ing => ing.id === i.id)?.category === "Buah");
         if (!hasFruit) {
             list.push({
                 type: "neutral",
                 title: "Tips Pencuci Mulut",
-                desc: "Ingin kesegaran ekstra? Tambahkan Pepaya atau Pisang untuk asupan vitamin alami setelah makan.",
+                desc: "Tambahkan Pepaya atau Pisang untuk asupan vitamin alami setelah makan.",
                 ingredientId: "pepaya"
             });
         }
-
-        // Tip about hydration (educational)
-        list.push({
-            type: "neutral",
-            title: "Jangan Lupa Minum",
-            desc: "Nutrisi di piringmu sudah mulai tertata. Imbangi dengan 1-2 gelas air putih agar penyerapan nutrisi maksimal.",
-        });
-
-        // Tip about "Almost Perfect"
+        
         if (totals.calories > 0 && !isPerfect && list.length < 3) {
             list.push({
                 type: "neutral",
-                title: "Selangkah Lagi Menuju Sempurna",
-                desc: "Menu Anda sudah lumayan baik. Coba sesuaikan porsi serat atau protein untuk mencapai status 'Piring Sempurna'.",
+                title: "Menuju Sempurna",
+                desc: "Menu Anda sudah lumayan baik. Sesuaikan porsi serat atau protein untuk mencapai 'Piring Sempurna'.",
             });
         }
     }
@@ -142,23 +158,23 @@ export const RecommendationEngine = ({
             {item.type === "success" && <Sparkles className="w-5 h-5 text-primary" />}
             {item.type === "warning" && <AlertTriangle className="w-5 h-5 text-accent" />}
             {item.type === "info" && <Lightbulb className="w-5 h-5 text-secondary" />}
-            {item.type === "neutral" && <Utensils className="w-5 h-5 text-foreground/40" />}
+            {item.type === "neutral" && <Utensils className="w-5 h-5 text-text-dark/40" />}
             
             <h4 className={cn(
               "font-bold text-sm uppercase tracking-widest",
               item.type === "success" && "text-primary",
               item.type === "warning" && "text-accent",
               item.type === "info" && "text-secondary",
-              item.type === "neutral" && "text-foreground/40"
+              item.type === "neutral" && "text-text-dark/40"
             )}>
-              {item.type === "success" ? "Pencapaian" : item.type === "neutral" ? "Saran Tambahan" : "Panduan GIZI"}
+              {item.type === "success" ? "Pencapaian" : item.type === "neutral" ? "Tips Pasangan" : "Panduan GIZI"}
             </h4>
           </div>
 
           <div className="flex gap-4 items-start">
             <div className="flex-grow">
-              <div className="font-bold text-foreground text-lg mb-1">{item.title}</div>
-              <p className="text-sm text-foreground/70 leading-relaxed italic">
+              <div className="font-bold text-text-dark text-lg mb-1">{item.title}</div>
+              <p className="text-sm text-text-dark/70 leading-relaxed italic">
                 {item.desc}
               </p>
             </div>

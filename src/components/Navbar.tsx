@@ -1,12 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
-import { useState } from "react";
+import { Menu, Flame } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Logo } from "./Logo";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [remainingCal, setRemainingCal] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateCal = () => {
+      const savedProfile = localStorage.getItem("gigizi_profile");
+      const savedIntake = localStorage.getItem("gigizi_daily_intake");
+      
+      if (savedProfile) {
+        const profile = JSON.parse(savedProfile);
+        let bmr = (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age);
+        bmr = profile.gender === "male" ? bmr + 5 : bmr - 161;
+        const tdee = Math.round(bmr * profile.activity);
+        const intake = Number(savedIntake || 0);
+        setRemainingCal(tdee - intake);
+      }
+    };
+
+    updateCal();
+    const interval = setInterval(updateCal, 2000); // Poll for changes
+    return () => clearInterval(interval);
+  }, []);
 
   const navLinks = [
     { name: "Kalkulator", href: "/calculator" },
@@ -39,10 +60,27 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {remainingCal !== null && (
+              <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+                <Flame className="w-4 h-4 text-primary animate-pulse" />
+                <span className="text-xs font-bold text-primary uppercase font-space-mono">
+                  Sisa: {remainingCal} kkal
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-4">
+            {remainingCal !== null && (
+              <div className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+                <Flame className="w-3 h-3 text-primary animate-pulse" />
+                <span className="text-[10px] font-bold text-primary font-space-mono">
+                  {remainingCal}
+                </span>
+              </div>
+            )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 text-text-dark hover:text-primary transition-colors"
