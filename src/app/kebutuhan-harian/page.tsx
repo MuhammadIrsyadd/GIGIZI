@@ -174,14 +174,8 @@ export default function KebutuhanHarianPage() {
         </motion.div>
       ) : (
         <div className="space-y-12">
+          {/* Main Status & Avatar */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            <BodyAvatar 
-                intake={intake} 
-                targets={calculateTargets} 
-                protein={0}
-                fiber={0}
-            />
-            
             <div className="bg-primary text-background-warm p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col justify-center text-center md:text-left">
               <h4 className="uppercase text-[10px] font-space-mono tracking-[0.4em] opacity-70 mb-2">Asupan Hari Ini</h4>
               <div className="text-7xl font-playfair font-bold mb-2">{intake} <span className="text-xl font-space-mono opacity-50 uppercase">kkal</span></div>
@@ -192,8 +186,16 @@ export default function KebutuhanHarianPage() {
               </div>
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
             </div>
+
+            <BodyAvatar 
+                intake={intake} 
+                targets={calculateTargets} 
+                protein={0}
+                fiber={0}
+            />
           </div>
 
+          {/* Status Message */}
           <div className={cn(
             "p-10 rounded-[3rem] border-2 flex flex-col justify-center transition-all",
             status.type === "ideal" ? "bg-primary/5 border-primary/20 text-primary" : 
@@ -211,35 +213,7 @@ export default function KebutuhanHarianPage() {
             </p>
           </div>
 
-          <div className="bg-white p-10 rounded-[3rem] border border-text-dark/5 shadow-sm">
-            <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
-              <TrendingUp className="w-6 h-6 text-primary" />
-              Tantangan 7 Hari
-            </h3>
-            <div className="space-y-4">
-              {challenges.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => toggleChallenge(c.id)}
-                  className={cn(
-                    "w-full p-6 rounded-2xl border flex items-center justify-between transition-all",
-                    c.completed ? "bg-primary/5 border-primary/20 text-primary" : "bg-background-warm border-text-dark/5 text-text-dark/60 hover:border-primary/20"
-                  )}
-                >
-                  <span className={cn("font-bold text-sm italic", c.completed && "line-through opacity-50")}>
-                    {c.title}
-                  </span>
-                  {c.completed ? <CheckCircle2 className="w-5 h-5" /> : <div className="w-5 h-5 border-2 border-current rounded-full opacity-20" />}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-secondary/10 p-10 rounded-[3rem] border border-secondary/20">
-            <h3 className="text-xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-2">
-                <Utensils className="w-5 h-5 text-secondary" />
-                Log Makanan Cepat
-            </h3>
+          {/* Quick Input Panel */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[100, 250, 500, 750].map(val => (
                     <button 
