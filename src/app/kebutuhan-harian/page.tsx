@@ -5,20 +5,15 @@ import {
   Target, 
   Flame, 
   Utensils, 
-  Info, 
   RefreshCcw, 
-  ChevronRight, 
-  AlertCircle, 
   CheckCircle2, 
   TrendingUp, 
   Activity,
-  Smile,
-  Frown,
-  Meh
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { BodyAvatar } from "@/components/BodyAvatar";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -32,12 +27,10 @@ interface UserProfile {
   activity: number;
 }
 
-import { BodyAvatar } from "@/components/BodyAvatar";
-
 export default function KebutuhanHarianPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [intake, setIntake] = useState<number>(0);
-  const [isCalculated, setIsAddingProfile] = useState(false);
+  const [isAddingProfile, setIsAddingProfile] = useState(false);
   
   // Weekly Challenge state
   const [challenges, setChallenges] = useState<{id: string, title: string, completed: boolean}[]>([
@@ -45,6 +38,15 @@ export default function KebutuhanHarianPage() {
     { id: "c2", title: "Makan Sayur di Setiap Piring", completed: false },
     { id: "c3", title: "Minum 8 Gelas Air Putih", completed: false },
   ]);
+
+  // Form State
+  const [form, setForm] = useState<UserProfile>({
+    gender: "male",
+    age: 21,
+    weight: 65,
+    height: 170,
+    activity: 1.2,
+  });
 
   // Load from LocalStorage
   useEffect(() => {
@@ -77,7 +79,6 @@ export default function KebutuhanHarianPage() {
     localStorage.setItem("gigizi_challenges", JSON.stringify(updated));
   };
 
-
   // BMR Calculation (Mifflin-St Jeor Equation)
   const calculateTargets = useMemo(() => {
     if (!profile) return { min: 1800, max: 2200 };
@@ -88,8 +89,8 @@ export default function KebutuhanHarianPage() {
     const tdee = Math.round(bmr * profile.activity);
     
     return {
-      min: tdee - 300, // Defisit ringan/aman
-      max: tdee + 200, // Maintenance/suplemen energi
+      min: tdee - 300,
+      max: tdee + 200,
       exact: tdee
     };
   }, [profile]);
@@ -113,7 +114,6 @@ export default function KebutuhanHarianPage() {
         type: "neutral", 
         label: "Belum Ada Data", 
         color: "text-text-dark/40", 
-        icon: <Meh />, 
         advice: "Ayo mulai hari ini dengan sarapan yang bergizi!" 
     };
     
@@ -121,7 +121,6 @@ export default function KebutuhanHarianPage() {
         type: "low", 
         label: "Kurang Energi", 
         color: "text-secondary", 
-        icon: <Frown />, 
         advice: "Tubuhmu butuh bahan bakar! Tambahkan protein atau karbohidrat sehat agar tidak lemas saat beraktivitas." 
     };
     
@@ -129,7 +128,6 @@ export default function KebutuhanHarianPage() {
         type: "ideal", 
         label: "Porsi Juara!", 
         color: "text-primary", 
-        icon: <Smile />, 
         advice: "Pertahankan! Asupanmu hari ini sangat pas. Pastikan diimbangi dengan minum air putih yang cukup." 
     };
     
@@ -137,7 +135,6 @@ export default function KebutuhanHarianPage() {
         type: "high", 
         label: "Over Budget", 
         color: "text-accent", 
-        icon: <AlertCircle />, 
         advice: "Kalori hari ini sudah berlebih. Coba kurangi camilan manis atau lakukan olahraga ringan selama 30 menit." 
     };
   };
@@ -156,7 +153,6 @@ export default function KebutuhanHarianPage() {
       </header>
 
       {!profile ? (
-        // ... (profile setup UI remains the same)
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,12 +174,11 @@ export default function KebutuhanHarianPage() {
         </motion.div>
       ) : (
         <div className="space-y-12">
-          {/* Avatar & Stats Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             <BodyAvatar 
                 intake={intake} 
                 targets={calculateTargets} 
-                protein={0} // We can enhance this later to track macros too
+                protein={0}
                 fiber={0}
             />
             
@@ -199,7 +194,23 @@ export default function KebutuhanHarianPage() {
             </div>
           </div>
 
-          {/* 7-Day Challenges Section */}
+          <div className={cn(
+            "p-10 rounded-[3rem] border-2 flex flex-col justify-center transition-all",
+            status.type === "ideal" ? "bg-primary/5 border-primary/20 text-primary" : 
+            status.type === "high" ? "bg-accent/5 border-accent/20 text-accent" : 
+            "bg-secondary/5 border-secondary/20 text-secondary"
+          )}>
+            <div className="flex items-center gap-4 mb-4">
+                <div>
+                  <h4 className="uppercase text-[10px] font-space-mono tracking-[0.3em] text-text-dark/40">Status Gizi</h4>
+                  <div className="text-2xl font-bold font-playfair">{status.label}</div>
+                </div>
+            </div>
+            <p className="text-text-dark/70 italic text-sm leading-relaxed">
+                {status.advice}
+            </p>
+          </div>
+
           <div className="bg-white p-10 rounded-[3rem] border border-text-dark/5 shadow-sm">
             <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
               <TrendingUp className="w-6 h-6 text-primary" />
@@ -224,7 +235,6 @@ export default function KebutuhanHarianPage() {
             </div>
           </div>
 
-          {/* Quick Input Panel */}
           <div className="bg-secondary/10 p-10 rounded-[3rem] border border-secondary/20">
             <h3 className="text-xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-2">
                 <Utensils className="w-5 h-5 text-secondary" />
@@ -274,12 +284,11 @@ export default function KebutuhanHarianPage() {
             </div>
           </div>
 
-          {/* Resep Sehat Irit Section */}
           <div className="bg-text-dark text-background-warm p-10 rounded-[3rem] shadow-xl overflow-hidden relative group">
             <div className="relative z-10">
                 <h3 className="text-2xl font-playfair font-bold mb-6 flex items-center gap-3">
                 <Flame className="w-6 h-6 text-secondary" />
-                Resep Sehat Irit Irsyad
+                Resep Sehat Irit
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="bg-white/10 p-6 rounded-2xl border border-white/5 hover:bg-white/20 transition-all">
@@ -304,13 +313,11 @@ export default function KebutuhanHarianPage() {
             </button>
           </div>
         </div>
-      ) : (
-        <p>Error in layout</p>
       )}
 
       {/* Profile Modal */}
       <AnimatePresence>
-        {isCalculated && (
+        {isAddingProfile && (
           <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
             <motion.div 
               initial={{ opacity: 0 }}
@@ -329,7 +336,7 @@ export default function KebutuhanHarianPage() {
                 onClick={() => setIsAddingProfile(false)}
                 className="absolute top-8 right-8 text-text-dark/40 hover:text-text-dark"
               >
-                <X className="w-6 h-6" />
+                <XIcon className="w-6 h-6" />
               </button>
               
               <h2 className="text-3xl font-playfair font-bold text-text-dark mb-2">Profil Fisik</h2>
@@ -409,6 +416,11 @@ export default function KebutuhanHarianPage() {
   );
 }
 
-function X({ className }: { className?: string }) {
-    return <Utensils className={className} style={{ transform: 'rotate(45deg)' }} />;
+function XIcon({ className }: { className?: string }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    );
 }
