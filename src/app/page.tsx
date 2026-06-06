@@ -2,9 +2,39 @@ import Link from "next/link";
 import { ArrowRight, Leaf, Zap, Heart } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
+const NUTRITION_FACTS = [
+  "Tahukah kamu? Tempe memiliki kandungan protein yang hampir setara dengan daging sapi.",
+  "Serat dari sayuran hijau membantu tubuh kenyang lebih lama dan melancarkan pencernaan.",
+  "Nasi merah memiliki indeks glikemik lebih rendah dibanding nasi putih, baik untuk gula darah.",
+  "Minum air putih sebelum makan dapat membantu mengontrol porsi makan Anda.",
+  "Satu buah telur mengandung protein berkualitas tinggi dan hampir semua vitamin yang dibutuhkan tubuh.",
+];
+
 export default function Home() {
+  const [fact, setFact] = useState("");
+
+  useEffect(() => {
+    setFact(NUTRITION_FACTS[Math.floor(Math.random() * NUTRITION_FACTS.length)]);
+  }, []);
+
   return (
     <div className="flex flex-col">
+      {/* Daily Fact Banner */}
+      <AnimatePresence>
+        {fact && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-primary/10 border-b border-primary/20 py-3 px-4 text-center"
+          >
+            <p className="text-sm font-medium text-primary flex items-center justify-center gap-2 italic">
+              <Sparkles className="w-4 h-4" />
+              Fakta Gizi: {fact}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

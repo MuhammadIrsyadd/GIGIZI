@@ -246,6 +246,21 @@ function CalculatorContent() {
     setTimeout(() => setShowToast(null), 3000);
   };
 
+  const shareToWhatsApp = () => {
+    if (selectedIngredients.length === 0) return;
+    
+    let text = `*PIRING GIGIZI HARI INI* 🥗\n\n`;
+    selectedIngredients.forEach(item => {
+        text += `• ${item.icon || '🍴'} ${item.name} (${item.weight}g)\n`;
+    });
+    text += `\n*TOTAL: ${Math.round(totals.calories)} kkal*\n`;
+    text += `P: ${totals.protein.toFixed(1)}g | L: ${totals.fat.toFixed(1)}g | K: ${totals.carbs.toFixed(1)}g\n\n`;
+    text += `_Dihitung dengan GIGIZI — Gizi di Ujung Jari_`;
+
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatePresence>
@@ -345,6 +360,13 @@ function CalculatorContent() {
                     <Download className="w-4 h-4" />
                     Unduh
                   </button>
+                  <button
+                    onClick={shareToWhatsApp}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors rounded-full text-sm font-bold"
+                  >
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.353-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.149-.297-.67-1.614-.918-2.194-.242-.583-.487-.503-.67-.503-.174-.002-.372-.002-.57-.002-.198 0-.519.074-.79.373-.271.298-1.038 1.017-1.038 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.136 1.36.116 1.871.041.57-.083 1.758-.718 2.008-1.412.25-.694.25-1.289.175-1.412-.075-.123-.274-.197-.571-.346zm-5.472 7.618c-2.106 0-4.156-.569-5.967-1.648l-.428-.254-4.436 1.163 1.183-4.324-.278-.442c-1.183-1.884-1.808-4.075-1.808-6.319 0-6.617 5.383-12 12-12s12 5.383 12 12-5.383 12-12 12zm0-24c-7.732 0-14 6.268-14 14 0 2.456.634 4.764 1.745 6.784l-1.854 6.776 6.945-1.821c1.944 1.077 4.148 1.644 6.409 1.644 7.732 0 14-6.268 14-14 0-7.732-6.268-14-14-14z"/></svg>
+                    WA
+                  </button>
                 </div>
               )}
             </div>
@@ -356,77 +378,77 @@ function CalculatorContent() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-4">
-                <AnimatePresence mode="popLayout">
-                  {selectedIngredients.map((item) => (
-                    <motion.div
-                      key={item.id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="bg-white p-6 rounded-[2rem] shadow-sm border border-text-dark/5 flex flex-col md:flex-row md:items-center gap-6"
-                    >
-                      <div className="flex items-center gap-4 flex-grow">
-                        <span className="text-4xl p-3 bg-background-warm rounded-2xl shadow-inner group-hover:rotate-6 transition-transform">
-                          {item.icon}
-                        </span>
-                        <div>
-                          <div className="font-bold text-lg text-text-dark">
-                            {item.name}
-                          </div>
-                          <div className="text-xs text-text-dark/50 font-space-mono uppercase tracking-widest">
-                            {item.calories} kkal / 100g
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-6">
-                        <div className="flex flex-col gap-1 min-w-[100px]">
-                          <label className="text-[10px] uppercase font-space-mono font-bold text-text-dark/40 tracking-wider">
-                            Berat (gram)
-                          </label>
-                          <div className="relative group">
-                            <input
-                              type="number"
-                              min="0"
-                              max="5000"
-                              value={item.weight === 0 ? "" : item.weight}
-                              placeholder="0"
-                              onChange={(e) =>
-                                updateWeight(item.id, parseInt(e.target.value))
-                              }
-                              className="w-full bg-background-warm border-2 border-text-dark/5 rounded-xl px-3 py-2 text-text-dark font-bold focus:outline-none focus:border-primary transition-all text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                            />
-                            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[10px] font-bold text-text-dark/20 group-focus-within:text-primary transition-colors">
-                              gr
+                <div className="space-y-4">
+                  <AnimatePresence mode="popLayout">
+                    {selectedIngredients.map((item) => (
+                      <motion.div
+                        key={item.id}
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className="bg-white p-6 rounded-[2rem] shadow-sm border border-text-dark/5 flex flex-col md:flex-row md:items-center gap-6"
+                      >
+                        <div className="flex items-center gap-4 flex-grow">
+                          <span className="text-4xl p-3 bg-background-warm rounded-2xl shadow-inner group-hover:rotate-6 transition-transform">
+                            {item.icon}
+                          </span>
+                          <div>
+                            <div className="font-bold text-lg text-text-dark">
+                              {item.name}
+                            </div>
+                            <div className="text-xs text-text-dark/50 font-space-mono uppercase tracking-widest">
+                              {item.calories} kkal / 100g
                             </div>
                           </div>
-                          <div className="flex gap-1 mt-1">
-                            <button onClick={() => updateWeight(item.id, 50)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">0.5x</button>
-                            <button onClick={() => updateWeight(item.id, 100)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">1x</button>
-                            <button onClick={() => updateWeight(item.id, 200)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">2x</button>
-                          </div>
                         </div>
-                        <div className="flex flex-col items-end min-w-[80px]">
-                          <div className="text-xl font-bold text-text-dark">
-                            {Math.round((item.calories * item.weight) / 100)}
+
+                        <div className="flex items-center gap-6">
+                          <div className="flex flex-col gap-1 min-w-[100px]">
+                            <label className="text-[10px] uppercase font-space-mono font-bold text-text-dark/40 tracking-wider">
+                              Berat (gram)
+                            </label>
+                            <div className="relative group">
+                              <input
+                                type="number"
+                                min="0"
+                                max="5000"
+                                value={item.weight === 0 ? "" : item.weight}
+                                placeholder="0"
+                                onChange={(e) =>
+                                  updateWeight(item.id, parseInt(e.target.value))
+                                }
+                                className="w-full bg-background-warm border-2 border-text-dark/5 rounded-xl px-3 py-2 text-text-dark font-bold focus:outline-none focus:border-primary transition-all text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              />
+                              <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[10px] font-bold text-text-dark/20 group-focus-within:text-primary transition-colors">
+                                gr
+                              </div>
+                            </div>
+                            <div className="flex gap-1 mt-1">
+                              <button onClick={() => updateWeight(item.id, 50)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">0.5x</button>
+                              <button onClick={() => updateWeight(item.id, 100)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">1x</button>
+                              <button onClick={() => updateWeight(item.id, 200)} className="text-[10px] bg-background-warm hover:bg-primary/10 text-text-dark/50 px-2 py-0.5 rounded">2x</button>
+                            </div>
                           </div>
-                          <div className="text-[10px] uppercase font-space-mono text-text-dark/40 tracking-tighter">
-                            Total kkal
+                          <div className="flex flex-col items-end min-w-[80px]">
+                            <div className="text-xl font-bold text-text-dark">
+                              {Math.round((item.calories * item.weight) / 100)}
+                            </div>
+                            <div className="text-[10px] uppercase font-space-mono text-text-dark/40 tracking-tighter">
+                              Total kkal
+                            </div>
                           </div>
+                          <button
+                            onClick={() => removeIngredient(item.id)}
+                            className="p-2 text-text-dark/20 hover:text-accent transition-colors"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
                         </div>
-                        <button
-                          onClick={() => removeIngredient(item.id)}
-                          className="p-2 text-text-dark/20 hover:text-accent transition-colors"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
             )}
           </div>
 
@@ -435,6 +457,22 @@ function CalculatorContent() {
             totals={totals}
             onAdd={addIngredient}
           />
+
+          <div className="mt-8 bg-white p-8 rounded-[3rem] border border-text-dark/5 shadow-sm">
+            <h3 className="text-xl font-playfair font-bold text-text-dark mb-4 flex items-center gap-2">
+              <Info className="w-5 h-5 text-secondary" />
+              Panduan Porsi Tangan
+            </h3>
+            <p className="text-xs text-text-dark/50 mb-6 italic">Gunakan tanganmu untuk mengira-ngira berat makanan tanpa timbangan.</p>
+            <div className="grid grid-cols-2 gap-4">
+              {PORTION_GUIDE.map((g) => (
+                <div key={g.label} className="p-4 bg-background-warm rounded-2xl border border-text-dark/5">
+                  <div className="text-[10px] font-bold uppercase text-secondary font-space-mono tracking-tighter">{g.label}</div>
+                  <div className="text-sm font-bold text-text-dark">{g.weight}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {savedMenus.length > 0 && (
             <div className="pt-8 border-t border-text-dark/10">
