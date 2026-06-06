@@ -241,7 +241,7 @@ export default function KebutuhanHarianPage() {
             <div className="relative z-10">
                 <h3 className="text-2xl font-playfair font-bold text-text-dark mb-6 flex items-center gap-3">
                 <Flame className="w-6 h-6 text-primary" />
-                Resep Sehat Irit Irsyad
+                Resep Sehat Irit
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm hover:shadow-md transition-all">
