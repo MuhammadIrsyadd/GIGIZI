@@ -22,21 +22,54 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GIGIZI — Kalkulator Nutrisi & Gizi Anak Kos",
-  description: "GIGIZI adalah kalkulator nutrisi praktis untuk anak kos. Cek kalori, makronutrien, dan dapatkan saran gizi seimbang untuk makanan warteg Anda.",
-  keywords: ["GIGIZI", "Kalkulator Kalori", "Nutrisi Anak Kos", "Gizi Seimbang", "Makanan Warteg", "Hitung Kalori"],
+  metadataBase: new URL("https://gigizi.vercel.app"),
+  title: {
+    default: "GIGIZI — Kalkulator Kalori & Nutrisi Anak Kos",
+    template: "%s | GIGIZI",
+  },
+  description:
+    "GIGIZI adalah kalkulator kalori dan nutrisi praktis untuk anak kos. Hitung kalori, protein, lemak, dan karbohidrat dari makanan warteg secara akurat dan mudah.",
+  keywords: [
+    "GIGIZI",
+    "Kalkulator Kalori",
+    "Hitung Kalori",
+    "Kalkulator Nutrisi",
+    "Gizi Anak Kos",
+    "Nutrisi Warteg",
+    "Gizi Seimbang",
+    "Kalori Makanan Indonesia",
+    "Diet Anak Kos",
+    "Health Calculator Indonesia",
+  ],
   authors: [{ name: "Irsyad" }],
   openGraph: {
-    title: "GIGIZI — Gizi di Ujung Jari",
-    description: "Kalkulator nutrisi praktis untuk anak kos.",
+    title: "GIGIZI — Kalkulator Kalori & Gizi di Ujung Jari",
+    description: "Kalkulator nutrisi praktis untuk anak kos dan masakan Indonesia.",
     url: "https://gigizi.vercel.app",
     siteName: "GIGIZI",
+    images: [
+      {
+        url: "/og-image.png", // Ensure this exists or use a default
+        width: 1200,
+        height: 630,
+        alt: "GIGIZI - Kalkulator Kalori & Nutrisi",
+      },
+    ],
     locale: "id_ID",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GIGIZI — Kalkulator Kalori & Gizi di Ujung Jari",
+    description: "Hitung kalori makanan harian Anda dengan mudah.",
+    images: ["/og-image.png"],
   },
   manifest: "/manifest.json",
   verification: {
     google: "wjVywy-HvCzYXe6LiZS6HQxN1iAbipVLPyE8tYxH5e8",
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

@@ -1,5 +1,15 @@
 import { Salad, Heart, Coffee, Leaf, Sparkles } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tentang GIGIZI — Misi & Filosofi Kami",
+  description:
+    "Pelajari kisah di balik GIGIZI, sebuah inisiatif untuk membantu anak kos dan masyarakat Indonesia memahami nutrisi makanan sehari-hari dengan cara yang simpel.",
+  alternates: {
+    canonical: "/about",
+  },
+};
 
 export default function AboutPage() {
   return (
